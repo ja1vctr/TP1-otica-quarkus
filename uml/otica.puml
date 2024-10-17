@@ -1,0 +1,112 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Oculos extends Produto {
+    - tipo: String
+    - referencia: String
+}
+
+class Lente {
+    - cor: String
+    - tipoLente: String
+    - materialLente: String
+    - indiceRefracao: Double
+    - tratamento: String
+    - categoriaFiltroSolar: String
+    - grau: String
+}
+
+class Armacao extends Produto{
+    - material: String
+    - tamanho: String
+    - formato: String
+    - curvaLente: String
+    - Modelo: String
+}
+enum Status {
+    DISPONIVEL, INDISPONIVEL
+}
+
+class Cor {
+    - nome: String
+    - indiceCorantes: String
+}
+
+enum Categoria {
+    MASCULINO, FEMININO, UNISSEX, INFANTIL
+}
+
+class Usuario {
+    - nome: String
+    - cpf: String
+    - email: String
+}
+
+class Cartao{
+    - bandeira: String
+    - numero: Double
+    - nome: String
+}
+
+class Perfil {
+    - descricao: String
+}
+
+class Permissao {
+    - nome: String
+    - descricao: String
+}
+class Produto {
+    - preco: Double
+    - nome: String
+}
+
+class Pedido {
+    - id: Integer
+    - data: LocalDateTime
+    - usuario: Usuario
+    - precoTotal: Double
+}
+
+enum FormaPagamento {
+    BOLETO, PIX, DEBITO, CREDITO
+}
+
+class ItemPedido {
+    - quantidade: Integer
+    - precoUnitario: Double
+}
+
+class Marca {
+    - nome: String
+}
+
+class Endereco {
+    - cep: String
+    - estado: String
+    - cidade: String
+    - bairro: String
+    - rua: String
+    - numero: Integer
+}
+
+Pedido     "*" --> "1" Usuario
+Pedido     "*" --> "*" ItemPedido
+Pedido     "*" --> "1" FormaPagamento
+ItemPedido "*" --> "1" Produto
+Produto    "*" --> "1" Status
+
+Armacao    "*" --> "1" Categoria
+Armacao    "*" *--> "1" Marca
+Armacao    "*" o--> "1" Cor
+Lente      "*" *--> "1" Marca
+Lente      "*" o--> "1" Cor
+Oculos     "*" *--> "1" Armacao
+Oculos     "*" *--> "1" Lente
+
+Perfil     "*" --> "*" Permissao
+Usuario    "1" --> "*" Perfil
+Usuario    "*" --> "*" Endereco
+Usuario    "*" --> "*" Cartao
+
+@enduml
