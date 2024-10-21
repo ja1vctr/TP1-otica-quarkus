@@ -1,5 +1,6 @@
 package br.unitins.topicos1.Service;
 
+import br.unitins.topicos1.dto.ArmacaoResponseDTO;
 import br.unitins.topicos1.dto.MarcaDTO;
 import br.unitins.topicos1.dto.MarcaResponseDTO;
 import br.unitins.topicos1.model.Marca;
@@ -22,6 +23,7 @@ public class MarcaServiceImp implements MarcaService {
     @Override
     @Transactional
     public MarcaResponseDTO create(MarcaDTO dto) {
+        validarNomeMarca(dto.nome());
         Marca newMarca = new Marca();
         newMarca.setNome(dto.nome());
 
@@ -45,7 +47,7 @@ public class MarcaServiceImp implements MarcaService {
 
     @Override
     public List<Marca> findAll(int page, int pageSize) {
-        return marcaRepository.findAll().page(Page.of(page,pageSize)).list();
+        return marcaRepository.findAll(page, pageSize).list();
     }
 
     @Override
@@ -54,18 +56,28 @@ public class MarcaServiceImp implements MarcaService {
     }
 
     @Override
-    public Marca findByNome(String nome) {
-        return marcaRepository.findByNome(nome);
+    public List<MarcaResponseDTO> findByListNome(String nome, int page, int pageSize) {
+        if (nome == null) {
+            throw new ValidationException("Marca", "nome nao pode ser Null");
+        }
+
+        return marcaRepository.findByListNome(nome, page, pageSize)
+                .stream()
+                .map(MarcaResponseDTO::valueOf)
+                .toList();
     }
 
-    @Override
-    public List<Marca> findByListNome(String nome, int page, int pagesize) {
-        return marcaRepository.findByListNome(nome).page(Page.of(page, pagesize)).list();
-    }
+    /////////// VALIDATION ///////////
 
     public void validarNomeMarca(String nomeMarca) {
+        validarNomeMarca(nomeMarca);
+
         if (marcaRepository.findByNome(nomeMarca) != null) {
             throw new ValidationException("Marca", "Marca" + nomeMarca + "já existe");
+        }
+
+        if (marcaRepository.findByNome(nomeMarca) == null) {
+            throw new ValidationException("Marca", "Objeto nao encontrado");
         }
     }
 

@@ -10,11 +10,15 @@ import br.unitins.topicos1.repository.ArmacaoRepository;
 import br.unitins.topicos1.repository.CorRepository;
 import br.unitins.topicos1.repository.MarcaRepository;
 import br.unitins.topicos1.validation.ValidationException;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import io.quarkus.panache.common.Page;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
 
+@ApplicationScoped
 public class ArmacaoServiceImp implements ArmacaoService{
     @Inject
     ArmacaoRepository armacaoRepository;
@@ -31,6 +35,7 @@ public class ArmacaoServiceImp implements ArmacaoService{
         validarNomeArmacao(dto.nome());
 
         Armacao newArmacao = new Armacao();
+        newArmacao.setId(null);
         newArmacao.setCor(cor);
         newArmacao.setPreco(dto.preco());
         newArmacao.setNome(dto.nome());
@@ -75,38 +80,77 @@ public class ArmacaoServiceImp implements ArmacaoService{
     }
 
     @Override
-    public List<Marca> findAll(int page, int pageSize) {
-        return null;
+    public List<Armacao> findAll(int page, int pageSize) {
+        return armacaoRepository.findAll().page(Page.of(page,pageSize)).list();
     }
 
     @Override
-    public Marca findById(Long id) {
-        return null;
+    public Armacao findById(Long id) {
+        return armacaoRepository.findById(id);
     }
 
     @Override
-    public Marca findByNome(String nome) {
-        return null;
+    public Armacao findByNome(String nome) {
+        return armacaoRepository.findByNome(nome);
+    }
+
+    @Override
+    public List<ArmacaoResponseDTO> findByListPreco(Double preco, int page, int pageSize) {
+        return armacaoRepository.findByListPreco(preco, page, pageSize)
+                .stream()
+                .map(ArmacaoResponseDTO::valueOf)
+                .toList();
     }
 
     @Override
     public List<ArmacaoResponseDTO> findByListNome(String nome, int page, int pagesize) {
-        return null;
+        return armacaoRepository.findByListNome(nome, page, pagesize)
+                .stream()
+                .map(ArmacaoResponseDTO::valueOf)
+                .toList();
+    }
+
+    @Override
+    public List<ArmacaoResponseDTO> findByListStatus(String status, int page, int pageSize) {
+        return armacaoRepository.findByListStatus(status, page, pageSize)
+                .stream()
+                .map(ArmacaoResponseDTO::valueOf)
+                .toList();
     }
 
     @Override
     public List<ArmacaoResponseDTO> findByListTamanho(String tamanho, int page, int pagesize) {
-        return null;
+        return armacaoRepository.findByListTamanho(tamanho)
+                .page(Page.of(page, pagesize))
+                .stream()
+                .map(ArmacaoResponseDTO::valueOf)
+                .toList();
     }
 
     @Override
     public List<ArmacaoResponseDTO> findByListFormato(String formato, int page, int pagesize) {
-        return null;
+        return armacaoRepository.findByListFormato(formato)
+                .page(Page.of(page, pagesize))
+                .stream()
+                .map(ArmacaoResponseDTO::valueOf)
+                .toList();
     }
 
     @Override
     public List<ArmacaoResponseDTO> findByListModelo(String modelo, int page, int pagesize) {
-        return null;
+        return armacaoRepository.findByListModelo(modelo)
+                .page(Page.of(page, pagesize))
+                .stream()
+                .map(ArmacaoResponseDTO::valueOf)
+                .toList();
+    }
+
+    @Override
+    public List<ArmacaoResponseDTO> dinamicSearch(String tamanho, String formato, String modelo, Double preco, String cor, String marca, int page, int pageSize) {
+        return armacaoRepository.dinamicSearch(tamanho, formato, modelo, preco, cor, marca, page, pageSize)
+                .stream()
+                .map(ArmacaoResponseDTO::valueOf)
+                .toList();
     }
 
 

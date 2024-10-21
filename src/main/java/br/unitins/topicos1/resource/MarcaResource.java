@@ -2,7 +2,6 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.Service.MarcaService;
 import br.unitins.topicos1.dto.MarcaDTO;
-import br.unitins.topicos1.model.Marca;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -44,8 +43,10 @@ public class MarcaResource {
 
     @GET
     @Path("/search/nome/{nome}")
-    public Response findByNome(@PathParam("nome") String nome){
-        return Response.ok(marcaService.findByNome(nome)).build();
+    public Response findListNome(@QueryParam("nome") String nome,
+                            @QueryParam("page") int page,
+                            @QueryParam("pageSize") int pageSize) {
+        return Response.ok(marcaService.findByListNome(nome, page, pageSize)).build();
     }
 
     @GET
