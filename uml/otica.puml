@@ -1,13 +1,37 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+class Produto {
+    - preco: Double
+    - nome: String
+    - quatidade: Integer
+}
+
 class Oculos extends Produto {
     - tipo: String
     - referencia: String
 }
 
+class Acessorio extends Produto {
+    - tipo: String
+    - nome: String
+    - descricao: String
+}
+
+class Armacao {
+    - material: String
+    - tamanho: String
+    - formato: String
+    - Modelo: String
+}
+
+class Medida {
+    - aro: Double
+    - haste: Double
+    - ponte: Double
+}
+
 class Lente {
-    - cor: String
     - tipoLente: String
     - materialLente: String
     - indiceRefracao: Double
@@ -16,14 +40,7 @@ class Lente {
     - grau: String
 }
 
-class Armacao extends Produto{
-    - material: String
-    - tamanho: String
-    - formato: String
-    - curvaLente: String
-    - Modelo: String
-}
-enum Status {
+enum StatusProduto {
     DISPONIVEL, INDISPONIVEL
 }
 
@@ -40,6 +57,7 @@ class Usuario {
     - nome: String
     - cpf: String
     - email: String
+    - status: Boolean
 }
 
 class Cartao{
@@ -48,17 +66,8 @@ class Cartao{
     - nome: String
 }
 
-class Perfil {
-    - descricao: String
-}
-
-class Permissao {
-    - nome: String
-    - descricao: String
-}
-class Produto {
-    - preco: Double
-    - nome: String
+Enum Permissao {
+    ADMIN, USER
 }
 
 class Pedido {
@@ -66,6 +75,10 @@ class Pedido {
     - data: LocalDateTime
     - usuario: Usuario
     - precoTotal: Double
+}
+
+enum StatusPedido {
+    PAGO, ATRASADO, PENDENTE
 }
 
 enum FormaPagamento {
@@ -90,23 +103,24 @@ class Endereco {
     - numero: Integer
 }
 
-Pedido     "*" --> "1" Usuario
-Pedido     "*" --> "*" ItemPedido
-Pedido     "*" --> "1" FormaPagamento
-ItemPedido "*" --> "1" Produto
-Produto    "*" --> "1" Status
+Pedido     "*" -->   "1" Usuario
+Pedido     "*" -->   "*" ItemPedido
+Pedido     "*" -->   "1" FormaPagamento
+Pedido     "*" -up-> "1" StatusPedido
+ItemPedido "*" -->   "1" Produto
+Produto    "*" -left->   "1" StatusProduto
 
-Armacao    "*" --> "1" Categoria
-Armacao    "*" *--> "1" Marca
-Armacao    "*" o--> "1" Cor
-Lente      "*" *--> "1" Marca
-Lente      "*" o--> "1" Cor
-Oculos     "*" *--> "1" Armacao
-Oculos     "*" *--> "1" Lente
+Armacao    "*" -up->   "1" Categoria
+Armacao    "*" *-->  "1" Marca
+Armacao    "*" o-->  "1" Cor
+Armacao    "*" o-->  "1" Medida
+Lente      "*" *-->  "1" Marca
+Lente      "*" o-->  "1" Cor
+Oculos     "*" *-->  "1" Armacao
+Oculos     "*" *-->  "1" Lente
 
-Perfil     "*" --> "*" Permissao
-Usuario    "1" --> "*" Perfil
-Usuario    "*" --> "*" Endereco
-Usuario    "*" --> "*" Cartao
+Usuario    "1" -->   "*" Permissao
+Usuario    "*" -->   "*" Endereco
+Usuario    "*" -->   "*" Cartao
 
 @enduml

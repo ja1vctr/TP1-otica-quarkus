@@ -51,4 +51,10 @@ public class CorResource {
     public Response findByNome(@PathParam("nome") String nome) {
         return Response.ok(corService.FindByNome(nome)).build();
     }
+
+    @GET
+    @Path("/search/indice-corante/{indice-corante}")
+    public Response findByindiceCorante(@PathParam("indice-corante") String indiceCorante) {
+        return Response.ok(corService.FindByindiceCorante(indiceCorante)).build();
+    }
 }

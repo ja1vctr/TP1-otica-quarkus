@@ -2,7 +2,6 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.Service.ArmacaoService;
 import br.unitins.topicos1.dto.ArmacaoDTO;
-import br.unitins.topicos1.dto.MarcaDTO;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -40,14 +39,6 @@ public class ArmacaoResource {
         return Response.ok(armacaoService.findById(id)).build();
     }
 
-
-    @GET
-    @Path("/search/preco/{preco}")
-    public Response findByPreco(@QueryParam("nome") Double preco,
-                               @QueryParam("page") int page,
-                               @QueryParam("pageSize") int pageSize) {
-        return Response.ok(armacaoService.findByListPreco(preco, page, pageSize)).build();
-    }
     @GET
     @Path("/search/nome/{nome}")
     public Response findByNome(@QueryParam("nome") String nome,
@@ -57,15 +48,31 @@ public class ArmacaoResource {
     }
 
     @GET
-    @Path("/search/status/{status}")
-    public Response findByStatus(@QueryParam("status") String status,
-                               @QueryParam("page") int page,
-                               @QueryParam("pageSize") int pageSize) {
-        return Response.ok(armacaoService.findByListStatus(status, page, pageSize)).build();
+    @Path("/search/medida/{medida}")
+    public Response findByMedida(@QueryParam("medida") Integer medida,
+                                 @QueryParam("page") int page,
+                                 @QueryParam("pageSize") int pageSize) {
+        return Response.ok(armacaoService.findByListMedida(medida, page, pageSize)).build();
     }
 
     @GET
-    @Path("/search")
+    @Path("/search/formato/{formato}")
+    public Response findByFormato(@QueryParam("formato") String formato,
+                                 @QueryParam("page") int page,
+                                 @QueryParam("pageSize") int pageSize) {
+        return Response.ok(armacaoService.findByListFormato(formato, page, pageSize)).build();
+    }
+
+    @GET
+    @Path("/search/modelo/{modelo}")
+    public Response findByModelo(@QueryParam("modelo") String modelo,
+                                 @QueryParam("page") int page,
+                                 @QueryParam("pageSize") int pageSize) {
+        return Response.ok(armacaoService.findByListModelo(modelo, page, pageSize)).build();
+    }
+
+    @GET
+    @Path("")
     public Response findAll(@QueryParam("page") int page,
                             @QueryParam("pageSize") int pageSize) {
         return Response.ok(armacaoService.findAll(page, pageSize)).build();
@@ -73,7 +80,7 @@ public class ArmacaoResource {
 
     @GET
     @Path("/search/filter")
-    public Response findByPreco(@QueryParam("tamanho") String tamanho,
+    public Response findByPreco(@QueryParam("tamanho") String medida,
                                 @QueryParam("formato") String formato,
                                 @QueryParam("modelo") String modelo,
                                 @QueryParam("preco") Double preco,
@@ -81,6 +88,6 @@ public class ArmacaoResource {
                                 @QueryParam("marca") String marca,
                                 @QueryParam("page")int page,
                                 @QueryParam("pageSize")int pageSize) {
-        return Response.ok(armacaoService.dinamicSearch(tamanho, formato, modelo, preco, cor, marca, page, pageSize)).build();
+        return Response.ok(armacaoService.dinamicSearch(medida, formato, modelo, preco, cor, marca, page, pageSize)).build();
     }
 }

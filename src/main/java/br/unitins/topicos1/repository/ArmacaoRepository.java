@@ -1,21 +1,17 @@
 package br.unitins.topicos1.repository;
 
 import br.unitins.topicos1.model.Armacao;
+import br.unitins.topicos1.model.Status;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Page;
 import jakarta.enterprise.context.ApplicationScoped;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @ApplicationScoped
 public class ArmacaoRepository implements PanacheRepository<Armacao> {
-    public PanacheQuery<Armacao> findAll() {
-        return find("from Armacao");
-    }
-
     public Armacao findByNome(String nome) {
         return find("UPPER(nome) = ?1", nome.toUpperCase()).firstResult();
     }
@@ -23,35 +19,26 @@ public class ArmacaoRepository implements PanacheRepository<Armacao> {
     public PanacheQuery<Armacao> findByListNome(String nome, int page, int pageSize) {
         return find("UPPER(nome) LIKE ?1", "%" + nome.toUpperCase() + "%").page(Page.of(page, pageSize));
     }
-    public PanacheQuery<Armacao> findByListPreco(Double preco, int page, int pageSize) {
-        return find("UPPER(nome) = ?1", preco).page(Page.of(page, pageSize));
+
+    public PanacheQuery<Armacao> findByListMedida(Integer medida, int page, int pageSize) {
+        return find("medida.id", medida).page(Page.of(page, pageSize));
     }
 
-    public PanacheQuery<Armacao> findByListStatus(String status, int page, int pageSize) {
-        return find("UPPER(nome) = ?1", status).page(Page.of(page, pageSize));
+    public PanacheQuery<Armacao> findByListFormato(String formato, int page, int pageSize) {
+        return find("UPPER(formato) LIKE ?1", "%" + formato.toUpperCase() + "%").page(Page.of(page, pageSize));
     }
 
-    public PanacheQuery<Armacao> findByListTamanho(String tamanho) {
-        return find("UPPER(nome) LIKE ?1", "%" + tamanho.toUpperCase() + "%");
+    public PanacheQuery<Armacao> findByListModelo(String modelo, int page, int pageSize) {
+        return find("UPPER(modelo) LIKE ?1", "%" + modelo.toUpperCase() + "%").page(Page.of(page, pageSize));
     }
 
-    public PanacheQuery<Armacao> findByListFormato(String formato) {
-        return find("UPPER(nome) LIKE ?1", "%" + formato.toUpperCase() + "%");
-    }
-
-    public PanacheQuery<Armacao> findByListModelo(String modelo) {
-        return find("UPPER(nome) LIKE ?1", "%" + modelo.toUpperCase() + "%");
-    }
-
-
-
-    public PanacheQuery<Armacao> dinamicSearch(String tamanho, String formato, String modelo, Double preco, String cor, String marca, int page, int pageSize) {
+    public PanacheQuery<Armacao> dinamicSearch(String medida, String formato, String modelo, Double preco, String cor, String marca, int page, int pageSize) {
         StringBuilder query = new StringBuilder("1=1");
         Map<String, Object> params = new HashMap<>();
 
-        if (tamanho != null && !formato.isEmpty()) {
-            query.append(" AND tamanho = :tamanho");
-            params.put("tamanho", tamanho);
+        if (medida != null && !medida.isEmpty()) {
+            query.append(" AND medida.descricao = :medida");
+            params.put("medida", medida);
         }
         if (formato != null && !formato.isEmpty()) {
             query.append(" AND formato = :formato");

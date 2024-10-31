@@ -8,14 +8,14 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class MarcaRepository implements PanacheRepository<Marca> {
-    public PanacheQuery<Marca> findAll(int page, int pageSize){
-        return find("from Marca").page(Page.of(page,pageSize));
+    public PanacheQuery<Marca> findAll(){
+        return find("from Marca");
     }
     public Marca findByNome(String nome){
-        return find("UPPER(nome) = ?1", nome.toUpperCase()).firstResult();
+        return find("UPPER(nome) LIKE ?1", "%" + nome.toUpperCase() + "%").firstResult();
     }
 
-    public PanacheQuery<Marca> findByListNome(String nome, int page, int pageSize){
-        return find("UPPER(nome) LIKE ?1", "%" +nome.toUpperCase()+ "%").page(Page.of(page, pageSize));
+    public PanacheQuery<Marca> findByListNome(String nome){
+        return find("UPPER(nome) LIKE ?1", "%" +nome.toUpperCase()+ "%");
     }
 }

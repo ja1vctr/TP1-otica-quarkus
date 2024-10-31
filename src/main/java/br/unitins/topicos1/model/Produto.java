@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-
 @Entity
 @Getter
 @Setter
@@ -20,4 +19,6 @@ public abstract class Produto{
     private String nome;
     @NotBlank(message = "Este campo não pode ser null")
     private Status status;
+    @NotBlank(message = "Este campo não pode ser null")
+    private Integer quantidade;
 }

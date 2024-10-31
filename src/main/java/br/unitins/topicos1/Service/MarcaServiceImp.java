@@ -23,7 +23,7 @@ public class MarcaServiceImp implements MarcaService {
     @Override
     @Transactional
     public MarcaResponseDTO create(MarcaDTO dto) {
-        validarNomeMarca(dto.nome());
+        validarNomeMarca(dto);
         Marca newMarca = new Marca();
         newMarca.setNome(dto.nome());
 
@@ -46,8 +46,12 @@ public class MarcaServiceImp implements MarcaService {
     }
 
     @Override
-    public List<Marca> findAll(int page, int pageSize) {
-        return marcaRepository.findAll(page, pageSize).list();
+    public List<MarcaResponseDTO> findAll() {
+        return marcaRepository
+                .findAll()
+                .stream()
+                .map(MarcaResponseDTO::valueOf)
+                .toList();
     }
 
     @Override
@@ -56,12 +60,12 @@ public class MarcaServiceImp implements MarcaService {
     }
 
     @Override
-    public List<MarcaResponseDTO> findByListNome(String nome, int page, int pageSize) {
+    public List<MarcaResponseDTO> findByListNome(String nome) {
         if (nome == null) {
             throw new ValidationException("Marca", "nome nao pode ser Null");
         }
 
-        return marcaRepository.findByListNome(nome, page, pageSize)
+        return marcaRepository.findByListNome(nome)
                 .stream()
                 .map(MarcaResponseDTO::valueOf)
                 .toList();
@@ -69,15 +73,10 @@ public class MarcaServiceImp implements MarcaService {
 
     /////////// VALIDATION ///////////
 
-    public void validarNomeMarca(String nomeMarca) {
-        validarNomeMarca(nomeMarca);
-
-        if (marcaRepository.findByNome(nomeMarca) != null) {
-            throw new ValidationException("Marca", "Marca" + nomeMarca + "já existe");
-        }
-
-        if (marcaRepository.findByNome(nomeMarca) == null) {
-            throw new ValidationException("Marca", "Objeto nao encontrado");
+    public void validarNomeMarca(MarcaDTO dto) {
+        Marca marca = marcaRepository.findByNome(dto.nome());
+        if (marca != null) {
+            throw new ValidationException("Marca", "Objeto já existe");
         }
     }
 

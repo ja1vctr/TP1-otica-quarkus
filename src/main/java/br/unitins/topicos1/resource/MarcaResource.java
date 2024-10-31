@@ -36,17 +36,14 @@ public class MarcaResource {
 
     @GET
     @Path("/buscar")
-    public Response findAll(@QueryParam("page") int page,
-                            @QueryParam("pageSize") int pageSize) {
-        return Response.ok(marcaService.findAll(page, pageSize)).build();
+    public Response findAll() {
+        return Response.ok(marcaService.findAll()).build();
     }
 
     @GET
     @Path("/search/nome/{nome}")
-    public Response findListNome(@QueryParam("nome") String nome,
-                            @QueryParam("page") int page,
-                            @QueryParam("pageSize") int pageSize) {
-        return Response.ok(marcaService.findByListNome(nome, page, pageSize)).build();
+    public Response findListNome(@QueryParam("nome") String nome) {
+        return Response.ok(marcaService.findByListNome(nome)).build();
     }
 
     @GET

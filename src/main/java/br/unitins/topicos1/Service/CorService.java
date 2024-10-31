@@ -20,5 +20,6 @@ public interface CorService {
 
     public CorResponseDTO findById(Long id);
 
-    public CorResponseDTO FindByNome(String nome);
+    public List<CorResponseDTO> FindByNome(String nome);
+    public CorResponseDTO FindByindiceCorante(String indice);
 }

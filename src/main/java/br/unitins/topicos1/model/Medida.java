@@ -2,15 +2,12 @@ package br.unitins.topicos1.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Cor extends BaseEntity{
-    private String nome;
-    @Column(unique = true)
-    private String indice;
+public class Medida extends BaseEntity{
+    private String descricao;
 }

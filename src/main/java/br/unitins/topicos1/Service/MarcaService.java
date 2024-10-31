@@ -16,9 +16,9 @@ public interface MarcaService {
 
     public void delete(Long id);
 
-    public List<Marca> findAll(int page, int pageSize);
+    public List<MarcaResponseDTO> findAll();
 
     public Marca findById(Long id);
 
-    public List<MarcaResponseDTO> findByListNome(String nome, int page, int pagesize);
+    public List<MarcaResponseDTO> findByListNome(String nome);
 }

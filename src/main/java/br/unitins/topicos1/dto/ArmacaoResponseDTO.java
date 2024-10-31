@@ -1,32 +1,28 @@
 package br.unitins.topicos1.dto;
 
 import br.unitins.topicos1.model.Armacao;
-import br.unitins.topicos1.model.Status;
+import br.unitins.topicos1.model.Categoria;
 
 public record ArmacaoResponseDTO(
         Long id,
-        Double preco,
         String nome,
-        Status status,
         String material,
-        String tamanho,
         String formato,
-        String curvaLente,
         String modelo,
+        Categoria categoria,
+        MedidaResponseDTO medida,
         CorResponseDTO cor,
         MarcaResponseDTO marca
 ) {
     public static ArmacaoResponseDTO valueOf(Armacao armacao){
         return new ArmacaoResponseDTO(
                 armacao.getId(),
-                armacao.getPreco(),
                 armacao.getNome(),
-                armacao.getStatus(),
                 armacao.getMaterial(),
-                armacao.getTamanho(),
                 armacao.getFormato(),
-                armacao.getCurvaLente(),
                 armacao.getModelo(),
+                armacao.getCategoria(),
+                MedidaResponseDTO.valueOf(armacao.getMedida()),
                 CorResponseDTO.valueOf(armacao.getCor()),
                 MarcaResponseDTO.valueOf(armacao.getMarca())
         );
