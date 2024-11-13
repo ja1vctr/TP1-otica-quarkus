@@ -9,12 +9,9 @@ import lombok.Setter;
 @Setter
 public class Lente extends BaseEntity{
     private String tipoLente;
-    private String material;
-    private Double indiceRefracao;
     private String tratamento;
     private String categoraiFiltroSolar;
     private Double astgmatismo;
     private Double miopia;
     private Double hipermetropia;
-
 }

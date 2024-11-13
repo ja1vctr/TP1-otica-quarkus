@@ -5,8 +5,6 @@ import br.unitins.topicos1.model.Lente;
 public record LenteResponseDTO(
         Long id,
         String tipoLente,
-        String material,
-        Double indiceRefracao,
         String tratamento,
         String categoriaFiltroSolar,
         Double astgmatiosmo,
@@ -17,8 +15,6 @@ public record LenteResponseDTO(
         return new LenteResponseDTO(
                 lente.getId(),
                 lente.getTipoLente(),
-                lente.getMaterial(),
-                lente.getIndiceRefracao(),
                 lente.getTratamento(),
                 lente.getCategoraiFiltroSolar(),
                 lente.getAstgmatismo(),

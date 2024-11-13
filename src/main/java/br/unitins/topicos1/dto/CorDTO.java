@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public record CorDTO(
         @NotBlank(message = "Este campo não pode ser null")
-        String nome,
-        @NotBlank(message = "Este campo não pode ser null")
-        String indice) {
+        @Column(unique = true)
+        String nome
+        ){
 }

@@ -1,20 +1,23 @@
 package br.unitins.topicos1.Service;
 
+import java.util.List;
+
 import br.unitins.topicos1.dto.ArmacaoDTO;
 import br.unitins.topicos1.dto.ArmacaoResponseDTO;
-import br.unitins.topicos1.model.*;
+import br.unitins.topicos1.model.Armacao;
+import br.unitins.topicos1.model.Categoria;
+import br.unitins.topicos1.model.Cor;
+import br.unitins.topicos1.model.Marca;
+import br.unitins.topicos1.model.Medida;
 import br.unitins.topicos1.repository.ArmacaoRepository;
 import br.unitins.topicos1.repository.CorRepository;
 import br.unitins.topicos1.repository.MarcaRepository;
 import br.unitins.topicos1.repository.MedidaRepository;
 import br.unitins.topicos1.validation.ValidationException;
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Page;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-
-import java.util.List;
 
 @ApplicationScoped
 public class ArmacaoServiceImp implements ArmacaoService{

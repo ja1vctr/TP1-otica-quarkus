@@ -1,12 +1,9 @@
 package br.unitins.topicos1.Service;
 
+import java.util.List;
+
 import br.unitins.topicos1.dto.CorDTO;
 import br.unitins.topicos1.dto.CorResponseDTO;
-import br.unitins.topicos1.model.Cor;
-import br.unitins.topicos1.validation.ValidationException;
-import jakarta.transaction.Transactional;
-
-import java.util.List;
 
 public interface CorService {
 
@@ -21,5 +18,4 @@ public interface CorService {
     public CorResponseDTO findById(Long id);
 
     public List<CorResponseDTO> FindByNome(String nome);
-    public CorResponseDTO FindByindiceCorante(String indice);
 }

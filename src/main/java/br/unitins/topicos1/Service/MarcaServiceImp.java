@@ -1,18 +1,15 @@
 package br.unitins.topicos1.Service;
 
-import br.unitins.topicos1.dto.ArmacaoResponseDTO;
+import java.util.List;
+
 import br.unitins.topicos1.dto.MarcaDTO;
 import br.unitins.topicos1.dto.MarcaResponseDTO;
 import br.unitins.topicos1.model.Marca;
 import br.unitins.topicos1.repository.MarcaRepository;
 import br.unitins.topicos1.validation.ValidationException;
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import io.quarkus.panache.common.Page;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-
-import java.util.List;
 
 @ApplicationScoped
 public class MarcaServiceImp implements MarcaService {

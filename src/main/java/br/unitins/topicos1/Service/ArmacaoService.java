@@ -1,12 +1,11 @@
 package br.unitins.topicos1.Service;
 
-import br.unitins.topicos1.dto.*;
-import br.unitins.topicos1.model.Armacao;
-import br.unitins.topicos1.model.Marca;
-import br.unitins.topicos1.model.Status;
-import jakarta.validation.Valid;
-
 import java.util.List;
+
+import br.unitins.topicos1.dto.ArmacaoDTO;
+import br.unitins.topicos1.dto.ArmacaoResponseDTO;
+import br.unitins.topicos1.model.Armacao;
+import jakarta.validation.Valid;
 
 public interface ArmacaoService {
     public ArmacaoResponseDTO create(@Valid ArmacaoDTO dto);

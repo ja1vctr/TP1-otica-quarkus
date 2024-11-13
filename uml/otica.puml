@@ -1,88 +1,33 @@
 @startuml
-'https://plantuml.com/class-diagram
-
 class Produto {
+    - id: Integer
     - preco: Double
     - nome: String
-    - quatidade: Integer
-}
-
-class Oculos extends Produto {
-    - tipo: String
-    - referencia: String
-}
-
-class Acessorio extends Produto {
-    - tipo: String
-    - nome: String
-    - descricao: String
-}
-
-class Armacao {
-    - material: String
     - tamanho: String
-    - formato: String
-    - Modelo: String
+    - tipo: String
+    - material: String
 }
 
-class Medida {
-    - aro: Double
-    - haste: Double
-    - ponte: Double
-}
-
-class Lente {
-    - tipoLente: String
-    - materialLente: String
-    - indiceRefracao: Double
-    - tratamento: String
+class OculosDeSol extends Produto {
     - categoriaFiltroSolar: String
-    - grau: String
+    - assinatura: String
+    - modelo: String
 }
 
-enum StatusProduto {
-    DISPONIVEL, INDISPONIVEL
+class Armacao extends Produto {
+    - formato: String
+    - curvaLente: String
 }
 
-class Cor {
-    - nome: String
-    - indiceCorantes: String
-}
-
-enum Categoria {
-    MASCULINO, FEMININO, UNISSEX, INFANTIL
-}
-
-class Usuario {
-    - nome: String
-    - cpf: String
-    - email: String
-    - status: Boolean
-}
-
-class Cartao{
-    - bandeira: String
-    - numero: Double
-    - nome: String
-}
-
-Enum Permissao {
-    ADMIN, USER
+class Lente extends Produto{
+    - tratamento: String
+    - receita: String
 }
 
 class Pedido {
     - id: Integer
     - data: LocalDateTime
-    - usuario: Usuario
     - precoTotal: Double
-}
-
-enum StatusPedido {
-    PAGO, ATRASADO, PENDENTE
-}
-
-enum FormaPagamento {
-    BOLETO, PIX, DEBITO, CREDITO
 }
 
 class ItemPedido {
@@ -90,8 +35,11 @@ class ItemPedido {
     - precoUnitario: Double
 }
 
-class Marca {
+class Usuario {
+    - id: Integer
     - nome: String
+    - userName: String
+    - senha: String
 }
 
 class Endereco {
@@ -103,24 +51,39 @@ class Endereco {
     - numero: Integer
 }
 
-Pedido     "*" -->   "1" Usuario
-Pedido     "*" -->   "*" ItemPedido
-Pedido     "*" -->   "1" FormaPagamento
-Pedido     "*" -up-> "1" StatusPedido
-ItemPedido "*" -->   "1" Produto
-Produto    "*" -left->   "1" StatusProduto
+enum FormaPagamento {
+    BOLETO, PIX, DEBITO, CREDITO
+}
 
-Armacao    "*" -up->   "1" Categoria
-Armacao    "*" *-->  "1" Marca
-Armacao    "*" o-->  "1" Cor
-Armacao    "*" o-->  "1" Medida
-Lente      "*" *-->  "1" Marca
-Lente      "*" o-->  "1" Cor
-Oculos     "*" *-->  "1" Armacao
-Oculos     "*" *-->  "1" Lente
+class Cartao {
+    - bandeira: String
+    - numero: String
+    - nomeTitular: String
+    - validade: String
+    - codigoSeguranca: String
+}
 
-Usuario    "1" -->   "*" Permissao
-Usuario    "*" -->   "*" Endereco
-Usuario    "*" -->   "*" Cartao
+class Cor {
+    - nome: String
+    - referencia: String
+}
+
+Class Marca { 
+    - nome: String
+    - cnpj: String
+}
+
+Armacao    "*" *--> "1" Cor
+OculosDeSol    "*" *--> "1" Cor
+Produto    "*" -left-> "1"  Marca
+
+Pedido     "*" --> "1"  Usuario
+Pedido     "*" --> "*"  ItemPedido
+Pedido     "*" --> "1"  FormaPagamento
+
+
+ItemPedido "*" --> "1"  Produto
+Usuario    "1" --> "*"  Endereco
+Usuario    "1" --> "*"  Cartao
 
 @enduml
