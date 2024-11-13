@@ -18,6 +18,7 @@ public class CorServiceImp implements CorService{
     @Override
     @Transactional
     public CorResponseDTO create(CorDTO dto) {
+        validarNomeCor(dto);
         Cor newCor = new Cor();
         newCor.setNome(dto.nome());
 
@@ -59,9 +60,7 @@ public class CorServiceImp implements CorService{
 
     @Override
     public List<CorResponseDTO> FindByNome(String nome) {
-        if(corRepository.findByNome(nome) == null )
-            throw new ValidationException("Cor", "Objeto não pode ser Null");
-        return corRepository.findByNome(nome)
+        return corRepository.findByListNome(nome)
                 .stream()
                 .map(CorResponseDTO::valueOf)
                 .toList();
@@ -69,6 +68,13 @@ public class CorServiceImp implements CorService{
 
 
     ///////////////////////////////////////////////
+    public void validarNomeCor(CorDTO dto){
+        Cor nomeCor = corRepository.findByNome(dto.nome());
+
+        if(nomeCor != null){
+            throw new ValidationException("Cor", "Objeto já existente");
+        }
+    }
     
     public void validarIdCor(Long id) {
         if (corRepository.findById(id) == null)
