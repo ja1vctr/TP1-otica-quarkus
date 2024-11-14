@@ -8,11 +8,9 @@ import br.unitins.topicos1.model.Armacao;
 import br.unitins.topicos1.model.Categoria;
 import br.unitins.topicos1.model.Cor;
 import br.unitins.topicos1.model.Marca;
-import br.unitins.topicos1.model.Medida;
 import br.unitins.topicos1.repository.ArmacaoRepository;
 import br.unitins.topicos1.repository.CorRepository;
 import br.unitins.topicos1.repository.MarcaRepository;
-import br.unitins.topicos1.repository.MedidaRepository;
 import br.unitins.topicos1.validation.ValidationException;
 import io.quarkus.panache.common.Page;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -27,15 +25,12 @@ public class ArmacaoServiceImp implements ArmacaoService{
     CorRepository corRepository;
     @Inject
     MarcaRepository marcaRepository;
-    @Inject
-    MedidaRepository medidaRepository;
 
     @Override
     @Transactional
     public ArmacaoResponseDTO create(ArmacaoDTO dto) {
         Cor cor = validarCor(dto.cor(), dto);
         Marca marca = validarMarca(dto.marca(), dto);
-        Medida medida = validarMedida(dto.medida(), dto);
 
         validarNomeArmacao(dto.nome());
 
@@ -45,7 +40,6 @@ public class ArmacaoServiceImp implements ArmacaoService{
         newArmacao.setNome(dto.nome());
         newArmacao.setCategoria(Categoria.valueOf(dto.idCategoria()));
         newArmacao.setModelo(dto.modelo());
-        newArmacao.setMedida(medida);
         newArmacao.setMaterial(dto.material());
         newArmacao.setMarca(marca);
         newArmacao.setFormato(dto.formato());
@@ -60,7 +54,6 @@ public class ArmacaoServiceImp implements ArmacaoService{
         validarIdArmacao(id);
         Cor cor = validarCor(dto.cor(), dto);
         Marca marca = validarMarca(dto.marca(), dto);
-        Medida medida = validarMedida(dto.medida(), dto);
 
         Armacao alterArmacao = armacaoRepository.findById(id);
 
@@ -68,7 +61,6 @@ public class ArmacaoServiceImp implements ArmacaoService{
         alterArmacao.setCategoria(Categoria.valueOf(dto.idCategoria()));
         alterArmacao.setMaterial(dto.material());
         alterArmacao.setFormato(dto.formato());
-        alterArmacao.setMedida(medida);
         alterArmacao.setModelo(dto.modelo());
         alterArmacao.setCor(cor);
         alterArmacao.setMarca(marca);
@@ -175,14 +167,5 @@ public class ArmacaoServiceImp implements ArmacaoService{
             throw new IllegalArgumentException("Marca com id " + dto.marca() + " não encontrada.");
         }
         return marca;
-    }
-
-    public Medida validarMedida(Long idMedida, ArmacaoDTO dto) {
-        Medida medida = medidaRepository.findById(dto.medida());
-
-        if(medida == null){
-            throw new IllegalArgumentException("Medida com id " + dto.marca() + " não encontrada.");
-        }
-        return medida;
     }
 }

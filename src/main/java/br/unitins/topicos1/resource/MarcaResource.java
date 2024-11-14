@@ -51,4 +51,10 @@ public class MarcaResource {
     public Response findById(@PathParam("id") Long id){
         return Response.ok(marcaService.findById(id)).build();
     }
+
+    @GET
+    @Path("/search/cnpj/{cnpj}")
+    public Response findCnpj(@QueryParam("cnpj") String cnpj) {
+        return Response.ok(marcaService.findByCnpj(cnpj)).build();
+    }
 }

@@ -1,14 +1,13 @@
 package br.unitins.topicos1.repository;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import br.unitins.topicos1.model.Armacao;
-import br.unitins.topicos1.model.Status;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Page;
 import jakarta.enterprise.context.ApplicationScoped;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @ApplicationScoped
 public class ArmacaoRepository implements PanacheRepository<Armacao> {

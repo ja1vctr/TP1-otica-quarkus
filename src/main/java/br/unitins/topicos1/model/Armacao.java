@@ -15,9 +15,6 @@ public class Armacao extends BaseEntity {
     private String modelo;
     private Categoria categoria;
     @ManyToOne
-    @JoinColumn(name = "id_medida")
-    private Medida medida;
-    @ManyToOne
     @JoinColumn(name = "id_cor")
     private Cor cor;
     @ManyToOne

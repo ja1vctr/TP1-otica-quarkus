@@ -52,8 +52,8 @@ public class MarcaServiceImp implements MarcaService {
     }
 
     @Override
-    public Marca findById(Long id) {
-        return marcaRepository.findById(id);
+    public MarcaResponseDTO findById(Long id) {
+        return MarcaResponseDTO.valueOf(marcaRepository.findById(id));
     }
 
     @Override
@@ -66,6 +66,11 @@ public class MarcaServiceImp implements MarcaService {
                 .stream()
                 .map(MarcaResponseDTO::valueOf)
                 .toList();
+    }
+
+    @Override
+    public MarcaResponseDTO findByCnpj(String cnpj) {
+        return MarcaResponseDTO.valueOf(marcaRepository.findByCnpf(cnpj));
     }
 
     /////////// VALIDATION ///////////
