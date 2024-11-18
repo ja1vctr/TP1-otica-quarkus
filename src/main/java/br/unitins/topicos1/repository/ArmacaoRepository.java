@@ -1,6 +1,7 @@
 package br.unitins.topicos1.repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.unitins.topicos1.model.Armacao;
@@ -11,25 +12,55 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class ArmacaoRepository implements PanacheRepository<Armacao> {
-    public Armacao findByNome(String nome) {
-        return find("UPPER(nome) = ?1", nome.toUpperCase()).firstResult();
+    
+    public Armacao findByPreco(Double preco) {
+        return find("preco = ?1", preco).firstResult();
     }
 
-    public PanacheQuery<Armacao> findByListNome(String nome, int page, int pageSize) {
-        return find("UPPER(nome) LIKE ?1", "%" + nome.toUpperCase() + "%").page(Page.of(page, pageSize));
+    public List<Armacao> findByListNome(String nome) {
+        return find("UPPER(nome) LIKE ?1", "%"+ nome.toUpperCase()+"%").list();
     }
 
-    public PanacheQuery<Armacao> findByListMedida(Integer medida, int page, int pageSize) {
-        return find("medida.id", medida).page(Page.of(page, pageSize));
+    public List<Armacao> findByListSatus(Long status) {
+        return find("status = ?1", status).list();
     }
 
-    public PanacheQuery<Armacao> findByListFormato(String formato, int page, int pageSize) {
-        return find("UPPER(formato) LIKE ?1", "%" + formato.toUpperCase() + "%").page(Page.of(page, pageSize));
+    public List<Armacao> findByListQuantiidade(int quantidade) {
+        return find("quantidade = ?1", quantidade).list();
     }
 
-    public PanacheQuery<Armacao> findByListModelo(String modelo, int page, int pageSize) {
-        return find("UPPER(modelo) LIKE ?1", "%" + modelo.toUpperCase() + "%").page(Page.of(page, pageSize));
+    public List<Armacao> findByListTamanho(String tamanho) {
+        return find("UPPER(tamanho) = ?1", tamanho).list();
     }
+    
+    public List<Armacao> findByListTipo(String tipo) {
+        return find("UPPER(tipo) = ?1", tipo).list();
+    }
+    
+    public List<Armacao> findByListMaterial(String material) {
+        return find("UPPER(material) = ?1", material).list();
+    }
+
+    public List<Armacao> findByListMarca(Long marca) {
+        return find("marca = ?1", marca).list();
+    }
+
+    public List<Armacao> findByListFormato(String formato) {
+        return find("UPPER(formato) = ?1", formato.toUpperCase()).list();
+    }
+
+    public List<Armacao> findByListCurvaLente(String curvaLente) {
+        return find("UPPER(curvaLente) = ?1", curvaLente.toUpperCase()).list();
+    }
+
+    public List<Armacao> findByListCor(Long cor) {
+        return find("cor = ?1", cor).list();
+    }
+    
+
+
+
+
 
     public PanacheQuery<Armacao> dinamicSearch(String medida, String formato, String modelo, Double preco, String cor, String marca, int page, int pageSize) {
         StringBuilder query = new StringBuilder("1=1");

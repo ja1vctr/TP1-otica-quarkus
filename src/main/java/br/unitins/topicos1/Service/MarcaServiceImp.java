@@ -20,19 +20,23 @@ public class MarcaServiceImp implements MarcaService {
     @Override
     @Transactional
     public MarcaResponseDTO create(MarcaDTO dto) {
-        validarNomeMarca(dto);
-        Marca newMarca = new Marca();
-        newMarca.setNome(dto.nome());
+        validarCnpjMarca(dto);
+        Marca marca = new Marca();
+        marca.setNome(dto.nome());
+        marca.setCnpj(dto.cnpj());
 
-        marcaRepository.persist(newMarca);
-        return MarcaResponseDTO.valueOf(newMarca);
+        marcaRepository.persist(marca);
+        return MarcaResponseDTO.valueOf(marca);
     }
 
     @Override
     @Transactional
     public void alter(Long id, MarcaDTO dto) {
         validarIdMarca(id);
-        marcaRepository.findById(id).setNome(dto.nome());
+        Marca marca = marcaRepository.findById(id);
+        marca.setNome(dto.nome());
+        marca.setCnpj(dto.cnpj());
+
     }
 
     @Override
@@ -53,6 +57,7 @@ public class MarcaServiceImp implements MarcaService {
 
     @Override
     public MarcaResponseDTO findById(Long id) {
+        validarIdMarca(id);
         return MarcaResponseDTO.valueOf(marcaRepository.findById(id));
     }
 
@@ -70,13 +75,17 @@ public class MarcaServiceImp implements MarcaService {
 
     @Override
     public MarcaResponseDTO findByCnpj(String cnpj) {
-        return MarcaResponseDTO.valueOf(marcaRepository.findByCnpf(cnpj));
+        try{
+            return MarcaResponseDTO.valueOf(marcaRepository.findByCnpf(cnpj));
+        }catch( Exception e){
+            throw new ValidationException("cnpj", "cnpj nao encontrado");
+        }
     }
 
     /////////// VALIDATION ///////////
 
-    public void validarNomeMarca(MarcaDTO dto) {
-        Marca marca = marcaRepository.findByNome(dto.nome());
+    public void validarCnpjMarca(MarcaDTO dto) {
+        Marca marca = marcaRepository.findByCnpf(dto.cnpj());
         if (marca != null) {
             throw new ValidationException("Marca", "Objeto já existe");
         }

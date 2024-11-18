@@ -34,8 +34,7 @@ public class MarcaResource {
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
-    @GET
-    @Path("/buscar")
+    @GET 
     public Response findAll() {
         return Response.ok(marcaService.findAll()).build();
     }

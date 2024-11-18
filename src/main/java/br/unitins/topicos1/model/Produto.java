@@ -1,6 +1,14 @@
 package br.unitins.topicos1.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,4 +29,10 @@ public abstract class Produto{
     private Status status;
     @NotBlank(message = "Este campo não pode ser null")
     private Integer quantidade;
+    private String tamanho;
+    private String tipo;
+    private String material;
+    @ManyToOne
+    @JoinColumn(name = "id_marca")
+    private Marca marca;
 }

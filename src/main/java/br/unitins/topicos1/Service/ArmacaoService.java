@@ -11,12 +11,14 @@ public interface ArmacaoService {
     public ArmacaoResponseDTO create(@Valid ArmacaoDTO dto);
     public void alter(Long id, ArmacaoDTO dto);
     public void delete(Long id);
-    public List<Armacao> findAll(int page, int pageSize);
-    public Armacao findById(Long id);
-    public Armacao findByNome(String nome);
-    public List<ArmacaoResponseDTO> findByListNome(String nome, int page, int pagesize);
-    public List<ArmacaoResponseDTO> findByListMedida(Integer medida,  int page, int pagesize);
-    public List<ArmacaoResponseDTO> findByListFormato(String formato, int page, int pagesize);
-    public List<ArmacaoResponseDTO> findByListModelo(String modelo, int page, int pagesize);
-    public List<ArmacaoResponseDTO> dinamicSearch(String medida, String formato, String modelo, Double preco,String cor, String marca, int page, int pageSize);
+    public List<ArmacaoResponseDTO> findAll();
+    public ArmacaoResponseDTO findById(Long id);
+    public ArmacaoResponseDTO findByPreco(Double preco);
+    public List<ArmacaoResponseDTO> findByNome(String nome);
+    public List<ArmacaoResponseDTO> findByStatus(Long status);
+    public List<ArmacaoResponseDTO> findByQuantidade(Integer quantidade);
+    public List<ArmacaoResponseDTO> findByTamanho(String tamanho);
+    public List<ArmacaoResponseDTO> findByTipo(String tipo);
+    public List<ArmacaoResponseDTO> findByMaterial(String material);
+    public List<ArmacaoResponseDTO> findByMarca(Long status);
 }

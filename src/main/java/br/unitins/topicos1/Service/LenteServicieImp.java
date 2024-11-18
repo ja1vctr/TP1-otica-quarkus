@@ -49,7 +49,6 @@ public class LenteServicieImp implements LenteServicie {
         lente.setMiopia(dto.miopia());
         lente.setHipermetropia(dto.hipermetropia());
         
-        lenteRespository.persist(lente);
     }
 
     @Override

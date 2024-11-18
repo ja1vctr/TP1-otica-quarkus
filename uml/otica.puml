@@ -3,6 +3,8 @@ class Produto {
     - id: Integer
     - preco: Double
     - nome: String
+    - status: String
+    - quantidade: Integer
     - tamanho: String
     - tipo: String
     - material: String
@@ -21,7 +23,8 @@ class Armacao extends Produto {
 
 class Lente extends Produto{
     - tratamento: String
-    - receita: String
+    - espessura: String
+    - imagemReceita: String
 }
 
 class Pedido {
@@ -55,6 +58,10 @@ enum FormaPagamento {
     BOLETO, PIX, DEBITO, CREDITO
 }
 
+enum Categoria {
+    MASCULINO, FEMININO, UNISSEX, INFANTIL
+}
+
 class Cartao {
     - bandeira: String
     - numero: String
@@ -73,17 +80,20 @@ Class Marca {
     - cnpj: String
 }
 
-Armacao    "*" *--> "1" Cor
-OculosDeSol    "*" *--> "1" Cor
-Produto    "*" -left-> "1"  Marca
+Armacao     "*" *--> "1" Cor
+Armacao     "*"  --> "1" Categoria
 
-Pedido     "*" --> "1"  Usuario
-Pedido     "*" --> "*"  ItemPedido
-Pedido     "*" --> "1"  FormaPagamento
+Produto     "*" -left-> "1"  Marca
 
+OculosDeSol "*" *--> "1" Cor
+OculosDeSol "*"  --> "1" Categoria
 
-ItemPedido "*" --> "1"  Produto
-Usuario    "1" --> "*"  Endereco
-Usuario    "1" --> "*"  Cartao
+Pedido      "*" --> "1"  Usuario
+Pedido      "*" --> "*"  ItemPedido
+Pedido      "*" --> "1"  FormaPagamento
 
+ItemPedido  "*" --> "1"  Produto
+
+Usuario     "1" --> "*"  Endereco
+Usuario     "1" --> "*"  Cartao
 @enduml

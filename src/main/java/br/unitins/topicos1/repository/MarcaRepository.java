@@ -20,7 +20,7 @@ public class MarcaRepository implements PanacheRepository<Marca> {
     }
 
     public Marca findByCnpf(String cnpj){
-        return find("UPPER(cnpj) LIKE ?1", "%" + cnpj.toUpperCase() + "%").singleResult();
+        return find("UPPER(cnpj) = ?1", cnpj.toUpperCase()).firstResult();
     }
 
 }
