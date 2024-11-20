@@ -19,7 +19,7 @@ public enum Categoria {
         this.nome = nome;
     }
 
-    public static Categoria valueOf(Integer id)throws IllegalArgumentException{
+    public static Categoria valueOf(Integer id) throws IllegalArgumentException{
         for(Categoria categoria : Categoria.values()){
             if(id == categoria.id)
                 return categoria;

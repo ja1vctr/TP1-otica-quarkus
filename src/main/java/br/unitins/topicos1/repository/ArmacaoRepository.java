@@ -1,10 +1,12 @@
 package br.unitins.topicos1.repository;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import br.unitins.topicos1.model.Armacao;
+import br.unitins.topicos1.model.Status;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Page;
@@ -13,19 +15,19 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class ArmacaoRepository implements PanacheRepository<Armacao> {
     
-    public Armacao findByPreco(Double preco) {
-        return find("preco = ?1", preco).firstResult();
+    public List<Armacao> findByPreco(Double preco) {
+        return find("preco = ?1", preco).list();
     }
 
     public List<Armacao> findByListNome(String nome) {
         return find("UPPER(nome) LIKE ?1", "%"+ nome.toUpperCase()+"%").list();
     }
 
-    public List<Armacao> findByListSatus(Long status) {
+    public List<Armacao> findByListSatus(Status status) {
         return find("status = ?1", status).list();
     }
 
-    public List<Armacao> findByListQuantiidade(int quantidade) {
+    public List<Armacao> findByListQuantidade(int quantidade) {
         return find("quantidade = ?1", quantidade).list();
     }
 
@@ -42,7 +44,7 @@ public class ArmacaoRepository implements PanacheRepository<Armacao> {
     }
 
     public List<Armacao> findByListMarca(Long marca) {
-        return find("marca = ?1", marca).list();
+        return find("marca.id = ?1", marca).list();
     }
 
     public List<Armacao> findByListFormato(String formato) {

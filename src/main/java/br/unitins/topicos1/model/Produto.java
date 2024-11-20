@@ -1,5 +1,6 @@
 package br.unitins.topicos1.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +27,7 @@ public abstract class Produto{
     @NotBlank(message = "Este campo não pode ser null")
     private String nome;
     @NotBlank(message = "Este campo não pode ser null")
+    @Column(name = "id_status")
     private Status status;
     @NotBlank(message = "Este campo não pode ser null")
     private Integer quantidade;

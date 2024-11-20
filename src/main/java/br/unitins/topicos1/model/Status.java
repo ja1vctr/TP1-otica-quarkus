@@ -15,7 +15,7 @@ public enum Status {
         this.nome = nome;
     }
 
-    public static Status valueOf(Integer id)throws IllegalArgumentException{
+    public static Status valueOf(Integer id) throws IllegalArgumentException{
         for(Status status : Status.values()){
             if(id == status.id)
                 return status;

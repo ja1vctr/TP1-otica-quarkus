@@ -4,11 +4,16 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.ArmacaoDTO;
 import br.unitins.topicos1.dto.ArmacaoResponseDTO;
+import br.unitins.topicos1.model.Armacao;
+import br.unitins.topicos1.model.Categoria;
+import br.unitins.topicos1.model.Status;
 import br.unitins.topicos1.repository.ArmacaoRepository;
 import br.unitins.topicos1.repository.CorRepository;
 import br.unitins.topicos1.repository.MarcaRepository;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @ApplicationScoped
@@ -24,81 +29,132 @@ public class ArmacaoServiceImp implements ArmacaoService{
 
 
     @Override
+    @Transactional
     public ArmacaoResponseDTO create(@Valid ArmacaoDTO dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        Armacao armacao = new Armacao();
+
+        armacao.setPreco(dto.preco());
+        armacao.setNome(dto.nome());
+        armacao.setStatus(Status.valueOf(dto.status()));
+        armacao.setQuantidade(dto.quantidade());
+        armacao.setTamanho(dto.tamnho());
+        armacao.setTipo(dto.tipo());
+        armacao.setMaterial(dto.material());
+        armacao.setMarca(marcaRepository.findById(dto.marca()));
+        armacao.setFormato(dto.formato());
+        armacao.setCategoria(Categoria.valueOf(dto.categoria()));
+        armacao.setCurvaDaLente(dto.curvaDaLente());
+        armacao.setCor(corRepository.findById(dto.cor()));
+        
+        armacaoRepository.persist(armacao);
+
+        return ArmacaoResponseDTO.valueOf(armacao);
+        
     }
 
     @Override
+    @Transactional
     public void alter(Long id, ArmacaoDTO dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'alter'");
+        Armacao armacao = armacaoRepository.findById(id);
+
+        armacao.setPreco(dto.preco());
+        armacao.setNome(dto.nome());
+        armacao.setStatus(Status.valueOf(dto.status()));
+        armacao.setQuantidade(dto.quantidade());
+        armacao.setTamanho(dto.tamnho());
+        armacao.setTipo(dto.tipo());
+        armacao.setMaterial(dto.material());
+        armacao.setMarca(marcaRepository.findById(dto.marca()));
+        armacao.setFormato(dto.formato());
+        armacao.setCategoria(Categoria.valueOf(dto.categoria()));
+        armacao.setCurvaDaLente(dto.curvaDaLente());
+        armacao.setCor(corRepository.findById(dto.cor()));
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        armacaoRepository.deleteById(id);
     }
 
     @Override
     public List<ArmacaoResponseDTO> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        return armacaoRepository.findAll()
+                                .stream()
+                                .map(ArmacaoResponseDTO::valueOf)
+                                .toList();
     }
 
     @Override
     public ArmacaoResponseDTO findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        return ArmacaoResponseDTO.valueOf(armacaoRepository.findById(id));
+        
     }
 
     @Override
-    public ArmacaoResponseDTO findByPreco(Double preco) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByPreco'");
+    public List<ArmacaoResponseDTO> findByPreco(Double preco) {
+        return armacaoRepository.findByPreco(preco)
+                                .stream()
+                                .map(ArmacaoResponseDTO::valueOf)
+                                .toList();
     }
 
     @Override
     public List<ArmacaoResponseDTO> findByNome(String nome) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByNome'");
+        return armacaoRepository.findByListNome(nome)
+                                .stream()
+                                .map(ArmacaoResponseDTO::valueOf)
+                                .toList();
     }
 
     @Override
-    public List<ArmacaoResponseDTO> findByStatus(Long status) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByStatus'");
+    public List<ArmacaoResponseDTO> findByStatus(Integer idStatus) {
+        Status status = Status.valueOf(idStatus);
+        
+            return armacaoRepository.findByListSatus(status)
+                                .stream()
+                                .map(ArmacaoResponseDTO::valueOf)
+                                .toList();
     }
 
     @Override
     public List<ArmacaoResponseDTO> findByQuantidade(Integer quantidade) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByQuantidade'");
+       return armacaoRepository.findByListQuantidade(quantidade)
+                                .stream()
+                                .map(ArmacaoResponseDTO::valueOf)
+                                .toList();
     }
 
     @Override
     public List<ArmacaoResponseDTO> findByTamanho(String tamanho) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByTamanho'");
+        return armacaoRepository.findByListTamanho(tamanho)
+                                .stream()
+                                .map(ArmacaoResponseDTO::valueOf)
+                                .toList();
     }
 
     @Override
     public List<ArmacaoResponseDTO> findByTipo(String tipo) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByTipo'");
+        return armacaoRepository.findByListTipo(tipo)
+                                .stream()
+                                .map(ArmacaoResponseDTO::valueOf)
+                                .toList();
     }
 
     @Override
     public List<ArmacaoResponseDTO> findByMaterial(String material) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByMaterial'");
+        return armacaoRepository.findByListMaterial(material)
+                                .stream()
+                                .map(ArmacaoResponseDTO::valueOf)
+                                .toList();
     }
 
     @Override
-    public List<ArmacaoResponseDTO> findByMarca(Long status) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByMarca'");
+    public List<ArmacaoResponseDTO> findByMarca(Long marca) {
+            return armacaoRepository.findByListMarca(marca)
+                                .stream()
+                                .map(ArmacaoResponseDTO::valueOf)
+                                .toList();
     }
     
 }

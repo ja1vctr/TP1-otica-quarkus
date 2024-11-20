@@ -1,17 +1,17 @@
 package br.unitins.topicos1.dto;
 
-import jakarta.validation.constraints.NotBlank;
-
 public record ArmacaoDTO(
         Double  preco,
         String  nome,
-        Long    status,
+        Integer status,
         Integer quantidade,
         String  tamnho,
         String  tipo,
         String  material,
+        Long    marca,
         String  formato,
-        Long    Categoria,
-        String  curvaDaLente
+        Integer categoria,
+        String  curvaDaLente,
+        Long    cor
 ) {
 }
