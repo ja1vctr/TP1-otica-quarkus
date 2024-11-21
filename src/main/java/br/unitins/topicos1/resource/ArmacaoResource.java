@@ -1,14 +1,17 @@
 package br.unitins.topicos1.resource;
 
-import java.io.ObjectInputFilter.Status;
-
-import br.unitins.topicos1.Service.ArmacaoService;
+import br.unitins.topicos1.Service.ArmacaoServiceImp;
+import br.unitins.topicos1.Service.ProdutoService;
 import br.unitins.topicos1.dto.ArmacaoDTO;
-import br.unitins.topicos1.dto.CorDTO;
-import br.unitins.topicos1.validation.ValidationExceptionMapper;
 import jakarta.inject.Inject;
-import jakarta.validation.ValidationException;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -18,7 +21,7 @@ import jakarta.ws.rs.core.Response;
 public class ArmacaoResource {
     
     @Inject
-    ArmacaoService armacaoService;
+    ArmacaoServiceImp armacaoService;
 
     @POST
     public Response create(ArmacaoDTO dto){

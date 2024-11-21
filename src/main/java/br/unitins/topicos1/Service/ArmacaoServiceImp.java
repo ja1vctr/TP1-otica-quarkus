@@ -4,20 +4,21 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.ArmacaoDTO;
 import br.unitins.topicos1.dto.ArmacaoResponseDTO;
+import br.unitins.topicos1.dto.LenteDTO;
+import br.unitins.topicos1.dto.LenteResponseDTO;
 import br.unitins.topicos1.model.Armacao;
 import br.unitins.topicos1.model.Categoria;
 import br.unitins.topicos1.model.Status;
 import br.unitins.topicos1.repository.ArmacaoRepository;
 import br.unitins.topicos1.repository.CorRepository;
 import br.unitins.topicos1.repository.MarcaRepository;
-import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @ApplicationScoped
-public class ArmacaoServiceImp implements ArmacaoService{
+public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, ArmacaoDTO>{
     @Inject
     ArmacaoRepository armacaoRepository;
 
@@ -156,5 +157,5 @@ public class ArmacaoServiceImp implements ArmacaoService{
                                 .map(ArmacaoResponseDTO::valueOf)
                                 .toList();
     }
-    
+
 }
