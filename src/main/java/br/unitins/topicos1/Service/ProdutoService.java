@@ -2,12 +2,8 @@ package br.unitins.topicos1.Service;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.LenteDTO;
-import br.unitins.topicos1.dto.LenteResponseDTO;
-import jakarta.validation.Valid;
-
 public interface ProdutoService<E,T> {
-    public E create(@Valid T dto);
+    public E create(T dto);
     public void alter(Long id, T dto);
     public void delete(Long id);
     public List<E> findAll();

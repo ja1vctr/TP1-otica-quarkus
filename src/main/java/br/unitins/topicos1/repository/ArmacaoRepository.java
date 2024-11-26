@@ -36,11 +36,11 @@ public class ArmacaoRepository implements PanacheRepository<Armacao> {
     }
     
     public List<Armacao> findByListTipo(String tipo) {
-        return find("UPPER(tipo) = ?1", tipo).list();
+        return find("UPPER(tipo) = ?1", tipo.toUpperCase()).list();
     }
     
     public List<Armacao> findByListMaterial(String material) {
-        return find("UPPER(material) = ?1", material).list();
+        return find("UPPER(material) LIKE ?1","%"+ material.toUpperCase()+ "%").list();
     }
 
     public List<Armacao> findByListMarca(Long marca) {

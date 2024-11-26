@@ -4,18 +4,16 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.ArmacaoDTO;
 import br.unitins.topicos1.dto.ArmacaoResponseDTO;
-import br.unitins.topicos1.dto.LenteDTO;
-import br.unitins.topicos1.dto.LenteResponseDTO;
 import br.unitins.topicos1.model.Armacao;
 import br.unitins.topicos1.model.Categoria;
 import br.unitins.topicos1.model.Status;
 import br.unitins.topicos1.repository.ArmacaoRepository;
 import br.unitins.topicos1.repository.CorRepository;
 import br.unitins.topicos1.repository.MarcaRepository;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, ArmacaoDTO>{
@@ -31,7 +29,7 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
 
     @Override
     @Transactional
-    public ArmacaoResponseDTO create(@Valid ArmacaoDTO dto) {
+    public ArmacaoResponseDTO create( ArmacaoDTO dto) {
         Armacao armacao = new Armacao();
 
         armacao.setPreco(dto.preco());
@@ -50,12 +48,12 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
         armacaoRepository.persist(armacao);
 
         return ArmacaoResponseDTO.valueOf(armacao);
-        
     }
 
     @Override
     @Transactional
     public void alter(Long id, ArmacaoDTO dto) {
+        validaId(id);
         Armacao armacao = armacaoRepository.findById(id);
 
         armacao.setPreco(dto.preco());
@@ -75,6 +73,7 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
     @Override
     @Transactional
     public void delete(Long id) {
+        validaId(id);
         armacaoRepository.deleteById(id);
     }
 
@@ -88,6 +87,7 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
 
     @Override
     public ArmacaoResponseDTO findById(Long id) {
+        validaId(id);
         return ArmacaoResponseDTO.valueOf(armacaoRepository.findById(id));
         
     }
@@ -157,5 +157,14 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
                                 .map(ArmacaoResponseDTO::valueOf)
                                 .toList();
     }
-
+    
+    
+    /*---------- VALIDATION ----------*/
+    
+    
+    public void validaId(Long id){
+        Armacao armacao = armacaoRepository.findById(id);
+        if(armacao == null)
+            throw new ValidationException("id","Valor não encontrado");
+    }
 }

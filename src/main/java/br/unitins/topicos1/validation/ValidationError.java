@@ -9,7 +9,7 @@ public class ValidationError extends br.unitins.topicos1.util.Error {
 
     private List<FieldError> errors = null;
 
-    public ValidationError(String code, String message) {
+    public ValidationError(String code, String message) { // Mensagens genéricas
         super(code, message);
     }
 

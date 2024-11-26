@@ -1,9 +1,10 @@
 package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.Service.ArmacaoServiceImp;
-import br.unitins.topicos1.Service.ProdutoService;
 import br.unitins.topicos1.dto.ArmacaoDTO;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -24,20 +25,20 @@ public class ArmacaoResource {
     ArmacaoServiceImp armacaoService;
 
     @POST
-    public Response create(ArmacaoDTO dto){
+    public Response create(@Valid ArmacaoDTO dto){
         return Response.status(Response.Status.CREATED).entity(armacaoService.create(dto)).build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response alter(@PathParam("id") Long id, ArmacaoDTO dto) {
+    public Response alter(@Valid @PathParam("id") Long id, ArmacaoDTO dto) {
         armacaoService.alter(id, dto);
         return Response.status(Response.Status.NO_CONTENT).build();
     }  
 
     @DELETE
     @Path("/{id}")
-    public Response delete(@PathParam("id") Long id) {
+    public Response delete(@Valid @PathParam("id") Long id) {
         armacaoService.delete(id);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
@@ -71,7 +72,7 @@ public class ArmacaoResource {
         try{
             return Response.ok(armacaoService.findByStatus(status)).build();
         }catch(Exception e){
-            throw new br.unitins.topicos1.validation.ValidationException(e.getLocalizedMessage(), e.getMessage());
+            throw new ValidationException("status", e.getMessage());
         }
         
     }
@@ -103,11 +104,6 @@ public class ArmacaoResource {
     @GET
     @Path("/search/marca/{marca}")
     public Response findBystatus(@PathParam("marca") Long marca) {
-        try{
             return Response.ok(armacaoService.findByMarca(marca)).build();
-        }catch(Exception e){
-            throw new br.unitins.topicos1.validation.ValidationException(e.getLocalizedMessage(), e.getMessage());
-            }
-        
     }
 }
