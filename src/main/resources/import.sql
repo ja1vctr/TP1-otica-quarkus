@@ -14,9 +14,7 @@ insert into marca ( nome, cnpj ) values('marca-6', 'cnpj-6');
 insert into marca ( nome, cnpj ) values('marca-7', 'cnpj-7');
 insert into marca ( nome, cnpj ) values('marca-8', 'cnpj-8');
 
-
-
--- insert into armacao ( id, preco, nome, id_status, quantidade, tamanho, tipo, material, id_marca, formato, categoria, curvaDaLente,  id_cor ) values( 1, 100.00, 'armacao-1', 1, 100, 'G', 'Clássico', 'Carbono', 1, 'Retengulo', 1, 'Suave', 1);
+-- insert into armacao ( preco, nome, id_status, quantidade, tamanho, tipo, material, id_marca, formato, categoria, curvaDaLente,  id_cor ) values( 100.00, 'armacao-1', 1, 100, 'G', 'Classico', 'Carbono', 1, 'Retengulo', 1, 'Suave', 1);
 -- insert into armacao ( nome, material, formato, modelo, categoria, id_medida, id_cor, id_marca ) values('armacao-teste-2', 'Plastico', 'formato2', 'modelo2', 2, 2, 2, 2);
 -- insert into armacao ( nome, material, formato, modelo, categoria, id_medida, id_cor, id_marca ) values('armacao-teste-3', 'Plastico', 'formato3', 'modelo3', 3, 3, 3, 3);
 

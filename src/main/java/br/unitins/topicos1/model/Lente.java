@@ -7,11 +7,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Lente extends BaseEntity{
-    private String tipoLente;
+public class Lente extends Produto{
     private String tratamento;
-    private String categoraiFiltroSolar;
-    private Double astgmatismo;
-    private Double miopia;
-    private Double hipermetropia;
+    private String espessura;
+    private String receita;
 }
