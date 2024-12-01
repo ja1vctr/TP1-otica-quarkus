@@ -13,6 +13,7 @@ import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDTO> {
@@ -26,17 +27,12 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
     
     @Override
     @Transactional
-    public LenteResponseDTO create(LenteDTO dto) {
+    public LenteResponseDTO create(@Valid LenteDTO dto) {
+        validarStatus(dto);
+        
+        validarMarca(dto);
+
         Lente lente = new Lente();
-
-        if(dto.status() != 1 && dto.status() !=2){
-            throw new ValidationException("status", "Campo invalido");
-        }
-
-        Marca marca = marcaRepository.findById(dto.marca());
-        if(marca == null){
-            throw new ValidationException("marca", "Campo invalido");
-        }
         
         lente.setPreco(dto.preco());
         lente.setNome(dto.nome());
@@ -55,21 +51,16 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
        return LenteResponseDTO.valueOf(lente);
     }
     
-    
     @Override
     @Transactional
-    public void alter(Long id, LenteDTO dto) {
+    public void alter(@Valid Long id, LenteDTO dto) {
         validarId(id);
+
+        validarStatus(dto);
+
+        validarMarca(dto);
+
         Lente lente = lenteRepository.findById(id);
-
-        if(dto.status() != 1 && dto.status() !=2){
-            throw new ValidationException("status", "Campo invalido");
-        }
-
-        Marca marca = marcaRepository.findById(dto.marca());
-        if(marca == null){
-            throw new ValidationException("marca", "Campo invalido");
-        }
 
         lente.setPreco(dto.preco());
         lente.setNome(dto.nome());
@@ -84,14 +75,12 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
         lente.setReceita(dto.receita());
     }
     
-    
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(@Valid Long id) {
         validarId(id);
         lenteRepository.deleteById(id);
     }
-    
     
     @Override
     public List findAll() {
@@ -101,13 +90,11 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
                                 .toList();
     }
     
-    
     @Override
     public LenteResponseDTO findById(Long id) {
         validarId(id);
         return LenteResponseDTO.valueOf(lenteRepository.findById(id));
     }
-    
     
     @Override
     public List findByPreco(Double preco) {
@@ -117,7 +104,6 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
                                 .toList();
     }
     
-    
     @Override
     public List findByNome(String nome) {
         return lenteRepository.findByListNome(nome)
@@ -126,7 +112,6 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
                                 .toList();
     }
     
-
     @Override
     public List findByStatus(Integer idStatus) {
         Status status = Status.valueOf(idStatus);
@@ -137,7 +122,6 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
                                 .toList();
     }
     
-    
     @Override
     public List findByQuantidade(Integer quantidade) {
         return lenteRepository.findByListQuantidade(quantidade)
@@ -145,7 +129,6 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
                                 .map(LenteResponseDTO::valueOf)
                                 .toList();
     }
-    
     
     @Override
     public List findByTamanho(String tamanho) {
@@ -155,7 +138,6 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
                                 .toList();
     }
     
-    
     @Override
     public List findByTipo(String tipo) {
         return lenteRepository.findByListTipo(tipo)
@@ -163,7 +145,6 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
                                 .map(LenteResponseDTO::valueOf)
                                 .toList();
     }
-    
     
     @Override
     public List findByMaterial(String material) {
@@ -173,7 +154,6 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
                                 .toList();
     }
     
-    
     @Override
     public List findByMarca(Long marca) {
         return lenteRepository.findByListMarca(marca)
@@ -182,12 +162,24 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
                                 .toList();
     }
     
-    
-    ///////////////////
+    /*---------- VALIDATION ----------*/
     
     public void validarId(Long id){
         if(lenteRepository.findById(id)==null){
             throw new ValidationException("Lente","Lente nao encontrada");
+        }
+    }
+
+    public void validarStatus(LenteDTO dto){
+        if(dto.status() != 1 && dto.status() !=2){
+            throw new ValidationException("status", "Campo invalido");
+        }
+    }
+    
+    public void validarMarca(LenteDTO dto){
+        Marca marca = marcaRepository.findById(dto.marca());
+        if(marca == null){
+            throw new ValidationException("marca", "Campo invalido");
         }
     }
 } 

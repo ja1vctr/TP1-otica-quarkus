@@ -2,10 +2,12 @@ package br.unitins.topicos1.Service;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 public interface ProdutoService<E,T> {
-    public E create(T dto);
-    public void alter(Long id, T dto);
-    public void delete(Long id);
+    public E create(@Valid T dto);
+    public void alter(@Valid Long id, T dto);
+    public void delete(@Valid Long id);
     public List<E> findAll();
     public E findById(Long id);
     public List<E> findByPreco(Double preco);

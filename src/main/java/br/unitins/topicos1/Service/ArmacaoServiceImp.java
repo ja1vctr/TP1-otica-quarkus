@@ -4,16 +4,20 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.ArmacaoDTO;
 import br.unitins.topicos1.dto.ArmacaoResponseDTO;
+import br.unitins.topicos1.dto.LenteDTO;
 import br.unitins.topicos1.model.Armacao;
 import br.unitins.topicos1.model.Categoria;
+import br.unitins.topicos1.model.Marca;
 import br.unitins.topicos1.model.Status;
 import br.unitins.topicos1.repository.ArmacaoRepository;
 import br.unitins.topicos1.repository.CorRepository;
 import br.unitins.topicos1.repository.MarcaRepository;
 import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.build.compatible.spi.Validation;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @ApplicationScoped
 public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, ArmacaoDTO>{
@@ -29,7 +33,13 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
 
     @Override
     @Transactional
-    public ArmacaoResponseDTO create( ArmacaoDTO dto) {
+    public ArmacaoResponseDTO create(@Valid ArmacaoDTO dto) {
+        validarMarca(dto);
+
+        validarCategoria(dto);
+
+        validarStatus(dto);
+        
         Armacao armacao = new Armacao();
 
         armacao.setPreco(dto.preco());
@@ -52,8 +62,15 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
 
     @Override
     @Transactional
-    public void alter(Long id, ArmacaoDTO dto) {
+    public void alter(@Valid Long id, ArmacaoDTO dto) {
         validaId(id);
+
+        validarMarca(dto);
+
+        validarCategoria(dto);
+
+        validarStatus(dto);
+
         Armacao armacao = armacaoRepository.findById(id);
 
         armacao.setPreco(dto.preco());
@@ -72,7 +89,7 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(@Valid Long id) {
         validaId(id);
         armacaoRepository.deleteById(id);
     }
@@ -166,5 +183,24 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
         Armacao armacao = armacaoRepository.findById(id);
         if(armacao == null)
             throw new ValidationException("id","Valor não encontrado");
+    }
+
+    public void validarStatus(ArmacaoDTO dto){
+        if(dto.status() != 1 && dto.status() !=2){
+            throw new ValidationException("status", "Campo invalido");
+        }
+    }
+
+    public void validarCategoria(ArmacaoDTO dto){
+        if(dto.categoria() != 1 && dto.categoria() !=2 && dto.categoria() !=3 && dto.categoria() !=4){
+            throw new ValidationException("categoria", "Campo invalido");
+        }
+    }
+    
+    public void validarMarca(ArmacaoDTO dto){
+        Marca marca = marcaRepository.findById(dto.marca());
+        if(marca == null){
+            throw new ValidationException("marca", "Campo invalido");
+        }
     }
 }

@@ -1,17 +1,17 @@
 package br.unitins.topicos1.dto;
 
+import io.smallrye.common.constraint.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public record ArmacaoDTO(
-        @NotBlank(message = "Valor não pode ser nulo")
+        @NotNull
         @PositiveOrZero
         Double  preco,
         @NotBlank(message = "Valor não pode ser nulo")
         String  nome,
-        @NotBlank(message = "Valor não pode ser nulo")
+        @NotNull
         Integer status,
-        @NotBlank(message = "Valor não pode ser nulo")
         @PositiveOrZero
         Integer quantidade,
         String  tamnho,
@@ -19,7 +19,6 @@ public record ArmacaoDTO(
         String  material,
         Long    marca,
         String  formato,
-        @NotBlank(message = "Valor não pode ser nulo")
         Integer categoria,
         String  curvaDaLente,
         Long    cor
