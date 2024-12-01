@@ -15,7 +15,8 @@ public record LenteResponseDTO(
         MarcaResponseDTO marca,
         String tratamento,
         String espessura,
-        String receita
+        String receita,
+        String nomeImagem
 ) {
     public static LenteResponseDTO valueOf (Lente lente){
         return new LenteResponseDTO(
@@ -30,7 +31,8 @@ public record LenteResponseDTO(
                 MarcaResponseDTO.valueOf(lente.getMarca()),
                 lente.getTratamento(),
                 lente.getEspessura(),
-                lente.getReceita()
+                lente.getReceita(),
+                lente.getNomeImagem()
         );
     }
 }

@@ -5,17 +5,18 @@ import java.util.List;
 import jakarta.validation.Valid;
 
 public interface ProdutoService<E,T> {
-    public E create(@Valid T dto);
-    public void alter(@Valid Long id, T dto);
-    public void delete(@Valid Long id);
-    public List<E> findAll();
-    public E findById(Long id);
-    public List<E> findByPreco(Double preco);
-    public List<E> findByNome(String nome);
-    public List<E> findByStatus(Integer status);
-    public List<E> findByQuantidade(Integer quantidade);
-    public List<E> findByTamanho(String tamanho);
-    public List<E> findByTipo(String tipo);
-    public List<E> findByMaterial(String material);
-    public List<E> findByMarca(Long marca);
+    E create(@Valid T dto);
+    void alter(@Valid Long id, T dto);
+    void delete(@Valid Long id);
+    List<E> findAll();
+    E findById(Long id);
+    List<E> findByPreco(Double preco);
+    List<E> findByNome(String nome);
+    List<E> findByStatus(Integer status);
+    List<E> findByQuantidade(Integer quantidade);
+    List<E> findByTamanho(String tamanho);
+    List<E> findByTipo(String tipo);
+    List<E> findByMaterial(String material);
+    List<E> findByMarca(Long marca);
+    E updateNomeImagem(Long id, String nomeImagem);
 }

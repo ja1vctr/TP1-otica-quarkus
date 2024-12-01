@@ -2,6 +2,7 @@ package br.unitins.topicos1.Service;
 
 import java.util.List;
 
+import br.unitins.topicos1.dto.ArmacaoResponseDTO;
 import br.unitins.topicos1.dto.OculosDeSolDTO;
 import br.unitins.topicos1.dto.OculosDeSolResponseDTO;
 import br.unitins.topicos1.model.Categoria;
@@ -171,6 +172,13 @@ public class OculosDeSolServiceImp implements ProdutoService<OculosDeSolResponse
                                 .stream()
                                 .map(OculosDeSolResponseDTO::valueOf)
                                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public OculosDeSolResponseDTO updateNomeImagem(Long id, String nomeImagem) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateNomeImagem'");
     }
     
     

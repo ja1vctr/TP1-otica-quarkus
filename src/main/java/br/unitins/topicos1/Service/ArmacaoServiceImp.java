@@ -5,6 +5,7 @@ import java.util.List;
 import br.unitins.topicos1.dto.ArmacaoDTO;
 import br.unitins.topicos1.dto.ArmacaoResponseDTO;
 import br.unitins.topicos1.dto.LenteDTO;
+import br.unitins.topicos1.dto.LenteResponseDTO;
 import br.unitins.topicos1.model.Armacao;
 import br.unitins.topicos1.model.Categoria;
 import br.unitins.topicos1.model.Marca;
@@ -175,6 +176,12 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
                                 .toList();
     }
     
+    @Override
+    @Transactional
+    public ArmacaoResponseDTO updateNomeImagem(Long id, String nomeImagem) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateNomeImagem'");
+    }
     
     /*---------- VALIDATION ----------*/
     
