@@ -2,7 +2,11 @@ package br.unitins.topicos1.Service.user;
 
 import java.util.List;
 
+import br.unitins.topicos1.Service.hash.HashServiceImp;
+import br.unitins.topicos1.dto.cadastro.AlterCadastroDTO;
 import br.unitins.topicos1.dto.cadastro.CadastroDTO;
+import br.unitins.topicos1.dto.user.UsuarioResponseDTO;
+import br.unitins.topicos1.model.user.Perfil;
 import br.unitins.topicos1.model.user.Usuario;
 import br.unitins.topicos1.repository.UsuarioRepository;
 import br.unitins.topicos1.validation.ValidationException;
@@ -16,35 +20,56 @@ public class UsuarioServiceImp implements UsuarioService {
     @Inject
     UsuarioRepository usuarioRepository;
 
+    @Inject
+    HashServiceImp hashService;
+
     @Override
-    public Usuario findById(Long id) {
-        return usuarioRepository.findById(id);
+    public UsuarioResponseDTO findById(Long id) {
+        return UsuarioResponseDTO.valueOf(usuarioRepository.findById(id));
     }
     @Override
-    public Usuario findByUsernameAndSenha(String username, String senha) {
-        return usuarioRepository.findByUsernameAndSenha(username, senha);
+    public UsuarioResponseDTO findByUsernameAndSenha(String username, String senha) {
+        return UsuarioResponseDTO.valueOf(usuarioRepository.findByUsernameAndSenha(username, senha));
     }
     @Override
-    public List<Usuario> findByNome(String nome) {
+    public List<UsuarioResponseDTO> findByNome(String nome) {
         return null;
     }
     @Override
-    public List<Usuario> findAll() {
-        return usuarioRepository.findAll().list();
+    public List<UsuarioResponseDTO> findAll() {
+        return usuarioRepository.findAll()
+                                .stream()
+                                .map(UsuarioResponseDTO::valueOf)  
+                                .toList();
     }
     
     @Override
     @Transactional
-    public Usuario create(CadastroDTO dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    public UsuarioResponseDTO create(CadastroDTO dto) {
+        Usuario usuario = new Usuario();
+        
+        usuario.setNome(dto.nome());
+        usuario.setUsername(dto.username());
+        usuario.setSenha(dto.senha());
+        usuario.setPerfil(Perfil.USER);
+        usuarioRepository.persist(usuario);
+
+        return UsuarioResponseDTO.valueOf(usuario);
     }
 
     @Override
     @Transactional
-    public Usuario update(Long id, CadastroDTO dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public void alter(Long id, AlterCadastroDTO dto) {
+        validarId(id);
+
+        Usuario usuario = usuarioRepository.findById(id);
+
+        usuario.setNome(dto.nome());
+        usuario.setUsername(dto.username());
+        String hash = hashService.getHashSenha(dto.senha());
+        usuario.setSenha(hash);
+        usuario.setPerfil(Perfil.valueOf(dto.perfil()));
+        usuarioRepository.persist(usuario);
     }
 
     @Override
@@ -53,7 +78,6 @@ public class UsuarioServiceImp implements UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-
     ///////////VALIDATION/////////////
     
     public void validarId (Long id){
@@ -61,6 +85,4 @@ public class UsuarioServiceImp implements UsuarioService {
             throw new ValidationException("Usuario", "Objeto nao encontrado");
         }
     }
-    
 }
-

@@ -10,7 +10,8 @@ import java.util.Base64;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class HashServiceImpl implements HashService {
+public class HashServiceImp implements HashService {
+    
     
     // sequencia aleatória a ser adicionada na senha
     private String salt = "#blahxyz17";
@@ -33,7 +34,7 @@ public class HashServiceImpl implements HashService {
         }
     }
     public static void main(String[] args) {
-        HashService hash = new HashServiceImpl();
+        HashService hash = new HashServiceImp();
         System.out.println(hash.getHashSenha("123456"));
     }
 }

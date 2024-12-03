@@ -41,7 +41,7 @@ public class AuthResource {
         LOG.infof("Iniciando a autenticacao do %s", authDTO.username());
 
         String hash = hashService.getHashSenha(authDTO.senha());
-        Usuario usuario = usuarioService.findByUsernameAndSenha(authDTO.username(), hash);
+        UsuarioResponseDTO usuario = usuarioService.findByUsernameAndSenha(authDTO.username(), hash);
 
         if (usuario == null) {
             return Response.status(Status.NO_CONTENT)
@@ -49,7 +49,7 @@ public class AuthResource {
         } 
         LOG.info("Efetuando login");
         return Response.ok()
-            .header("Authorization", jwtService.generateJwt(UsuarioResponseDTO.valueOf(usuario)))
+            .header("Authorization", jwtService.generateJwt(usuario))
             .build();   
     }
 }
