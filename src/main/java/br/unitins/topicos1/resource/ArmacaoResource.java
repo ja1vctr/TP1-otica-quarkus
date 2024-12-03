@@ -1,14 +1,20 @@
 package br.unitins.topicos1.resource;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+
 import br.unitins.topicos1.Service.ArmacaoServiceImp;
+import br.unitins.topicos1.Service.file.ArmacaoFileServiceImp;
 import br.unitins.topicos1.dto.ArmacaoDTO;
+import br.unitins.topicos1.form.LenteImageForm;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -16,6 +22,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.ResponseBuilder;
 
 @Path("/armacoes")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -25,6 +32,9 @@ public class ArmacaoResource {
 
     @Inject
     ArmacaoServiceImp armacaoService;
+    
+    @Inject
+    ArmacaoFileServiceImp armacaoFileService;
 
     @POST
     public Response create(@Valid ArmacaoDTO dto){
@@ -82,11 +92,11 @@ public class ArmacaoResource {
             return Response.ok(armacaoService.findByStatus(status)).build();
         }
         
-        @GET
-        @Path("/search/quantidade/{quantidade}")
-        public Response findByquantidade(@PathParam("quantidade") Integer quantidade) {
-        LOG.info("Busca varias armacao pela quantidade");
-        return Response.ok(armacaoService.findByQuantidade(quantidade)).build();
+    @GET
+    @Path("/search/quantidade/{quantidade}")
+    public Response findByquantidade(@PathParam("quantidade") Integer quantidade) {
+    LOG.info("Busca varias armacao pela quantidade");
+    return Response.ok(armacaoService.findByQuantidade(quantidade)).build();
     }
     
     @GET
@@ -115,5 +125,35 @@ public class ArmacaoResource {
     public Response findBystatus(@PathParam("marca") Long marca) {
         LOG.info("Busca varias armacao pela marca");
             return Response.ok(armacaoService.findByMarca(marca)).build();
+    }
+
+    @PATCH
+    @Path("/{id}/upload/imagem")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadImage(@PathParam("id") Long id, @MultipartForm LenteImageForm form) {
+        try {
+            String nomeImagem = armacaoFileService.save(form.getNomeImagem(), form.getImagem());
+            
+            armacaoService.updateNomeImagem(id, nomeImagem);
+        
+        } catch (IOException e) {
+            LOG.info(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                       .entity("Erro ao fazer upload da imagem. Verifique o log.")
+                       .build();
+        }
+        LOG.info("upload de imagem lente");
+        return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/download/imagem/{nomeImagem}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response downloadImage(@PathParam("nomeImagem") String nomeImagem) {
+        ResponseBuilder response = 
+            Response.ok(armacaoFileService.find(nomeImagem));
+            response.header("Content-Disposition", "attachment; filename="+nomeImagem);
+            LOG.info("download de imagem lente: " + nomeImagem);
+            return response.build();
     }
 }

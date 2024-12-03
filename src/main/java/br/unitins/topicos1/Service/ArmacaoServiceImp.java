@@ -179,8 +179,12 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
     @Override
     @Transactional
     public ArmacaoResponseDTO updateNomeImagem(Long id, String nomeImagem) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateNomeImagem'");
+        validaId(id);
+
+        Armacao armacao = armacaoRepository.findById(id);
+        armacao.setNomeImagem(nomeImagem);
+
+        return ArmacaoResponseDTO.valueOf(armacao);
     }
     
     /*---------- VALIDATION ----------*/

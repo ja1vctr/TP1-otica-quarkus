@@ -17,7 +17,8 @@ public record OculosDeSolResponseDTO(
         String modelo,
         Categoria categoria,
         String filtroSolar,
-        CorResponseDTO cor
+        CorResponseDTO cor,
+        String nomeImagem
 ) {
     public static OculosDeSolResponseDTO valueOf(OculosDeSol oculos ){
         return new OculosDeSolResponseDTO(
@@ -33,7 +34,8 @@ public record OculosDeSolResponseDTO(
                 oculos.getModelo(),
                 oculos.getCategoria(),
                 oculos.getFiltroSolar(),
-                CorResponseDTO.valueOf(oculos.getCor())
+                CorResponseDTO.valueOf(oculos.getCor()),
+                oculos.getNomeImagem()
         );
     }
 }

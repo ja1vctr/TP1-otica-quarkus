@@ -177,8 +177,13 @@ public class OculosDeSolServiceImp implements ProdutoService<OculosDeSolResponse
     @Override
     @Transactional
     public OculosDeSolResponseDTO updateNomeImagem(Long id, String nomeImagem) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateNomeImagem'");
+        validaId(id);
+
+        OculosDeSol oculosDeSol = oculosDeSolRepository.findById(id);
+
+        oculosDeSol.setNomeImagem(nomeImagem);
+
+        return OculosDeSolResponseDTO.valueOf(oculosDeSol);
     }
     
     

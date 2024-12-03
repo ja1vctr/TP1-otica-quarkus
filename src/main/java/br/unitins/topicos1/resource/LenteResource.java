@@ -128,18 +128,25 @@ public class LenteResource {
         return Response.ok(lenteService.findByMarca(marca)).build();
     }
 
-     @PATCH
+    @PATCH
     @Path("/{id}/upload/imagem")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadImage(@PathParam("id") Long id, @MultipartForm LenteImageForm form) {
         try {
             String nomeImagem = lenteFileService.save(form.getNomeImagem(), form.getImagem());
+            
             lenteService.updateNomeImagem(id, nomeImagem);
+        
         } catch (IOException e) {
-           Response.status(500).build();
+            LOG.info(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                       .entity("Erro ao fazer upload da imagem. Verifique o log.")
+                       .build();
         }
+        LOG.info("upload de imagem lente");
         return Response.noContent().build();
     }
+
     @GET
     @Path("/download/imagem/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
@@ -147,6 +154,7 @@ public class LenteResource {
         ResponseBuilder response = 
             Response.ok(lenteFileService.find(nomeImagem));
             response.header("Content-Disposition", "attachment; filename="+nomeImagem);
+            LOG.info("download de imagem lente: " + nomeImagem);
             return response.build();
     }
 }

@@ -10,9 +10,11 @@ import jakarta.ws.rs.FormParam;
 public class LenteImageForm {
     @FormParam("nomeImagem")
     private String nomeImagem;
+    
     @FormParam("imagem")
     @PartType("application/octet-stream")
     private byte[] imagem;
+    
     public String getNomeImagem() {
         return nomeImagem;
     }

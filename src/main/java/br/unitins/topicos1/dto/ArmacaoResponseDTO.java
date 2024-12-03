@@ -17,7 +17,8 @@ public record ArmacaoResponseDTO(
         String formato,
         Categoria categoria,
         String curvaDaLente,
-        CorResponseDTO cor
+        CorResponseDTO cor,
+        String nomeImagem
 ) {
     public static ArmacaoResponseDTO valueOf(Armacao armacao){
         return new ArmacaoResponseDTO(
@@ -33,7 +34,8 @@ public record ArmacaoResponseDTO(
                 armacao.getFormato(),
                 armacao.getCategoria(),
                 armacao.getCurvaDaLente(),
-                CorResponseDTO.valueOf(armacao.getCor())
+                CorResponseDTO.valueOf(armacao.getCor()),
+                armacao.getNomeImagem()
         );
     }
 }

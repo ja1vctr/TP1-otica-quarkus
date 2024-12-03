@@ -14,12 +14,12 @@ import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class LenteFileServiceImp implements FileService {
+public class OculosDeSolFileServiceImp implements FileService {
     
-    private final String PATH_LENTE = System.getProperty("user.home") + 
+    private final String PATH_OCULOS = System.getProperty("user.home") + 
                                         File.separator + "quarkus" +
                                         File.separator + "imagens" +
-                                        File.separator + "lente" + File.separator;
+                                        File.separator + "oculos-de-sol" + File.separator;
 
     private static final List<String> SUPPORTED_MIME_TYPES = Arrays.asList("image/jpeg", "image/jpg", "image/png", "image/gif");
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 10; // 10 mb
@@ -28,7 +28,7 @@ public class LenteFileServiceImp implements FileService {
     @Override
     public String save(String nomeArquivo, byte[] arquivo) throws IOException {
         // Criar os diretórios, se não existirem
-        Path diretorio = Paths.get(PATH_LENTE);
+        Path diretorio = Paths.get(PATH_OCULOS);
         Files.createDirectories(diretorio);
 
         // Identificar o tipo MIME
@@ -59,7 +59,11 @@ public class LenteFileServiceImp implements FileService {
 
     @Override
     public File find(String nomeArquivo) {
-        return new File(PATH_LENTE + nomeArquivo);
+        try{
+            return new File(PATH_OCULOS + nomeArquivo);
+        }catch(Exception e){
+            throw new ValidationException("Imagem", e.getMessage());
+        }
     }
 
     public static void main(String[] args) {

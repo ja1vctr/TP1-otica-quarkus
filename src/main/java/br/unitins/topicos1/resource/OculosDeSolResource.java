@@ -1,13 +1,19 @@
 package br.unitins.topicos1.resource;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+
 import br.unitins.topicos1.Service.OculosDeSolServiceImp;
+import br.unitins.topicos1.Service.file.OculosDeSolFileServiceImp;
 import br.unitins.topicos1.dto.OculosDeSolDTO;
+import br.unitins.topicos1.form.LenteImageForm;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -15,6 +21,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.ResponseBuilder;
 
 @Path("/Oculos")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -25,6 +32,9 @@ public class OculosDeSolResource {
     
     @Inject
     OculosDeSolServiceImp oculosDeSolService;
+
+    @Inject
+    OculosDeSolFileServiceImp oculosDeSolFileService;
 
     @POST
     public Response create(OculosDeSolDTO dto){
@@ -115,5 +125,35 @@ public class OculosDeSolResource {
     public Response findBystatus(@PathParam("marca") Long marca) {
         LOG.info("Busca varios oculos pela marca");
         return Response.ok(oculosDeSolService.findByMarca(marca)).build();
+    }
+
+    @PATCH
+    @Path("/{id}/upload/imagem")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadImage(@PathParam("id") Long id, @MultipartForm LenteImageForm form) {
+        try {
+            String nomeImagem = oculosDeSolFileService.save(form.getNomeImagem(), form.getImagem());
+            
+            oculosDeSolService.updateNomeImagem(id, nomeImagem);
+        
+        } catch (IOException e) {
+            LOG.info(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                       .entity("Erro ao fazer upload da imagem. Verifique o log.")
+                       .build();
+        }
+        LOG.info("upload de imagem lente");
+        return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/download/imagem/{nomeImagem}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response downloadImage(@PathParam("nomeImagem") String nomeImagem) {
+        ResponseBuilder response = 
+            Response.ok(oculosDeSolFileService.find(nomeImagem));
+            response.header("Content-Disposition", "attachment; filename="+nomeImagem);
+            LOG.info("download de imagem lente: " + nomeImagem);
+            return response.build();
     }
 }

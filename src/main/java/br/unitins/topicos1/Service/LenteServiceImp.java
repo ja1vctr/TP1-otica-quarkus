@@ -74,6 +74,7 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
         lente.setEspessura(dto.espessura());
         lente.setReceita(dto.receita());
     }
+
     
     @Override
     @Transactional
@@ -161,16 +162,17 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
                                 .map(LenteResponseDTO::valueOf)
                                 .toList();
     }
-
+                            
     @Override
     @Transactional
     public LenteResponseDTO updateNomeImagem(Long id, String nomeImagem) {
         validarId(id);
         Lente lente = lenteRepository.findById(id);
-
+        
         lente.setNomeImagem(nomeImagem);
 
-        return LenteResponseDTO.valueOf(lenteRepository.findById(id));
+
+        return LenteResponseDTO.valueOf(lente);
     }
     
     /*---------- VALIDATION ----------*/

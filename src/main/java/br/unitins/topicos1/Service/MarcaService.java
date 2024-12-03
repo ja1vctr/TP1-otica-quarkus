@@ -5,7 +5,6 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.MarcaDTO;
 import br.unitins.topicos1.dto.MarcaResponseDTO;
-import br.unitins.topicos1.model.Marca;
 import jakarta.validation.Valid;
 
 public interface MarcaService {
