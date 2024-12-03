@@ -20,7 +20,7 @@ public class JwtServiceImp implements JwtService {
         Set<String> roles = new HashSet<String>();
         roles.add(dto.perfil().getLabel());
         return Jwt.issuer("unitins-jwt")
-            .subject(dto.userName())
+            .subject(dto.username())
             .groups(roles)
             .expiresAt(expiryDate)
             .sign();

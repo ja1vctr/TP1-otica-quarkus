@@ -9,6 +9,7 @@ import br.unitins.topicos1.Service.LenteServiceImp;
 import br.unitins.topicos1.Service.file.LenteFileServiceImp;
 import br.unitins.topicos1.dto.LenteDTO;
 import br.unitins.topicos1.form.LenteImageForm;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -38,6 +39,7 @@ public class LenteResource {
     LenteFileServiceImp lenteFileService;
 
     @POST
+    @RolesAllowed({"ADM"})
     public Response create(@Valid LenteDTO dto){
         LOG.info("Cadastra uma lente");
         return Response.status(Response.Status.CREATED).entity(lenteService.create(dto)).build();
@@ -45,6 +47,7 @@ public class LenteResource {
     
     @PUT
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response alter(@Valid @PathParam("id") Long id, LenteDTO dto) {
         lenteService.alter(id, dto);
         LOG.info("Altera uma lente");
@@ -53,6 +56,7 @@ public class LenteResource {
     
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response delete(@Valid @PathParam("id") Long id) {
         lenteService.delete(id);
         LOG.info("Deleta uma lente pelo id");
@@ -131,6 +135,7 @@ public class LenteResource {
     @PATCH
     @Path("/{id}/upload/imagem")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed({"ADM"})
     public Response uploadImage(@PathParam("id") Long id, @MultipartForm LenteImageForm form) {
         try {
             String nomeImagem = lenteFileService.save(form.getNomeImagem(), form.getImagem());
@@ -150,6 +155,7 @@ public class LenteResource {
     @GET
     @Path("/download/imagem/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @RolesAllowed({"ADM"})
     public Response downloadImage(@PathParam("nomeImagem") String nomeImagem) {
         ResponseBuilder response = 
             Response.ok(lenteFileService.find(nomeImagem));

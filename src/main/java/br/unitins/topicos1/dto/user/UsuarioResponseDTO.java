@@ -5,14 +5,14 @@ import br.unitins.topicos1.model.user.Usuario;
 
 public record UsuarioResponseDTO (
     Long id,
-    String userName,
+    String username,
     String senha,
     Perfil perfil
 ){
     public static UsuarioResponseDTO valueOf(Usuario usuario){
         return new UsuarioResponseDTO(
             usuario.getId(), 
-            usuario.getUserName(), 
+            usuario.getUsername(), 
             usuario.getSenha(), 
             usuario.getPerfil());
     }

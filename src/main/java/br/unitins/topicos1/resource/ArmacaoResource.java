@@ -9,6 +9,7 @@ import br.unitins.topicos1.Service.ArmacaoServiceImp;
 import br.unitins.topicos1.Service.file.ArmacaoFileServiceImp;
 import br.unitins.topicos1.dto.ArmacaoDTO;
 import br.unitins.topicos1.form.LenteImageForm;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -37,6 +38,7 @@ public class ArmacaoResource {
     ArmacaoFileServiceImp armacaoFileService;
 
     @POST
+    @RolesAllowed({"ADM"})
     public Response create(@Valid ArmacaoDTO dto){
         LOG.info("Cadastra uma armacao");
         return Response.status(Response.Status.CREATED).entity(armacaoService.create(dto)).build();
@@ -44,6 +46,7 @@ public class ArmacaoResource {
     
     @PUT
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response alter(@Valid @PathParam("id") Long id, ArmacaoDTO dto) {
         armacaoService.alter(id, dto);
         LOG.info("Altera uma armacao");
@@ -52,6 +55,7 @@ public class ArmacaoResource {
     
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response delete(@Valid @PathParam("id") Long id) {
         armacaoService.delete(id);
         LOG.info("Deleta uma armacao pelo id");
@@ -130,6 +134,7 @@ public class ArmacaoResource {
     @PATCH
     @Path("/{id}/upload/imagem")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed({"ADM"})
     public Response uploadImage(@PathParam("id") Long id, @MultipartForm LenteImageForm form) {
         try {
             String nomeImagem = armacaoFileService.save(form.getNomeImagem(), form.getImagem());
@@ -149,6 +154,7 @@ public class ArmacaoResource {
     @GET
     @Path("/download/imagem/{nomeImagem}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @RolesAllowed({"ADM"})
     public Response downloadImage(@PathParam("nomeImagem") String nomeImagem) {
         ResponseBuilder response = 
             Response.ok(armacaoFileService.find(nomeImagem));

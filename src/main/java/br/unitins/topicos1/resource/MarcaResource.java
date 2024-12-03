@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import br.unitins.topicos1.Service.MarcaService;
 import br.unitins.topicos1.dto.MarcaDTO;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -28,6 +29,7 @@ public class MarcaResource {
     MarcaService marcaService;
 
     @POST
+    @RolesAllowed({"ADM"})
     public Response create(MarcaDTO dto) {
         LOG.info("Cadastrar uma marca");
         return Response.status(Response.Status.CREATED).entity(marcaService.create(dto)).build();
@@ -35,6 +37,7 @@ public class MarcaResource {
     
     @PUT
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response alter(@PathParam("id") Long id, MarcaDTO dto) {
         marcaService.alter(id, dto);
         LOG.info("Alterar uma marca");
@@ -43,13 +46,15 @@ public class MarcaResource {
     
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response delete(@PathParam("id") Long id) {
         marcaService.delete(id);
         LOG.info("Deletar uma marca pelo id");
         return Response.status(Response.Status.NO_CONTENT).build();
     }
     
-    @GET 
+    @GET
+    @RolesAllowed({"ADM"}) 
     public Response findAll() {
         LOG.info("Buscar todas as marcas");
         return Response.ok(marcaService.findAll()).build();
@@ -57,6 +62,7 @@ public class MarcaResource {
     
     @GET
     @Path("/search/nome/{nome}")
+    @RolesAllowed({"ADM"}) 
     public Response findListNome(@QueryParam("nome") String nome) {
         LOG.info("Buscar varias marcas pelo nome");
         return Response.ok(marcaService.findByListNome(nome)).build();
@@ -64,6 +70,7 @@ public class MarcaResource {
     
     @GET
     @Path("/{id}")
+    @RolesAllowed({"ADM"}) 
     public Response findById(@PathParam("id") Long id){
         LOG.info("Buscar uma marca pelo id");
         return Response.ok(marcaService.findById(id)).build();
@@ -71,8 +78,9 @@ public class MarcaResource {
     
     @GET
     @Path("/search/cnpj/{cnpj}")
+    @RolesAllowed({"ADM"}) 
     public Response findCnpj(@QueryParam("cnpj") String cnpj) {
         LOG.info("Buscar uma marca pelo cnpj");
         return Response.ok(marcaService.findByCnpj(cnpj)).build();
     }
-}
+} 

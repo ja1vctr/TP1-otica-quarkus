@@ -15,8 +15,8 @@ insert into marca ( nome, cnpj ) values('marca-7', 'cnpj-7');
 insert into marca ( nome, cnpj ) values('marca-8', 'cnpj-8');
 
 
-insert into Usuario(nome, userName, senha, perfil) values ('Joao Victor''ja1vctr', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 1);
-insert into Usuario(nome, userName, senha, perfil) values ('user comum''user', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 2);
+insert into Usuario(nome, userName, senha, perfil) values ('Joao Victor','joao', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 1);
+insert into Usuario(nome, userName, senha, perfil) values ('user comum','user', '0cctg7WgpEz7kC/AzVC+KX+bZLPXDtgJDqWWZWnmzHH+7Na2YVxYYSFPxcf7ImAjqfNckx0aT4n5qKM7WEoeEQ==', 2);
 
 
 -- insert into armacao ( preco, nome, id_status, quantidade, tamanho, tipo, material, id_marca, formato, categoria, curvaDaLente,  id_cor ) values( 100.00, 'armacao-1', 1, 100, 'G', 'Classico', 'Carbono', 1, 'Retengulo', 1, 'Suave', 1);

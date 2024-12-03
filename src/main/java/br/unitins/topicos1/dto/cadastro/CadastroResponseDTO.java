@@ -12,7 +12,7 @@ public record CadastroResponseDTO (
         return new CadastroResponseDTO(
             usuario.getId(), 
             usuario.getNome(), 
-            usuario.getUserName(), 
+            usuario.getUsername(), 
             usuario.getSenha());
     }
 }

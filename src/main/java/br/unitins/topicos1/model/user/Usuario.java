@@ -10,7 +10,7 @@ import lombok.Setter;
 @Entity
 public class Usuario extends BaseEntity{
     private String nome;
-    private String userName;
+    private String username;
     private String senha;
     private Perfil perfil;
 }

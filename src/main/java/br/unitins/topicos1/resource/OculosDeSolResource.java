@@ -9,6 +9,7 @@ import br.unitins.topicos1.Service.OculosDeSolServiceImp;
 import br.unitins.topicos1.Service.file.OculosDeSolFileServiceImp;
 import br.unitins.topicos1.dto.OculosDeSolDTO;
 import br.unitins.topicos1.form.LenteImageForm;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -37,6 +38,7 @@ public class OculosDeSolResource {
     OculosDeSolFileServiceImp oculosDeSolFileService;
 
     @POST
+    @RolesAllowed({"ADM"})
     public Response create(OculosDeSolDTO dto){
         LOG.info("Cadastra um oculos");
         return Response.status(Response.Status.CREATED).entity(oculosDeSolService.create(dto)).build();
@@ -44,6 +46,7 @@ public class OculosDeSolResource {
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response alter(@PathParam("id") Long id, OculosDeSolDTO dto) {
         oculosDeSolService.alter(id, dto);
         LOG.info("Altera um oculos");
@@ -52,6 +55,7 @@ public class OculosDeSolResource {
     
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response delete(@PathParam("id") Long id) {
         oculosDeSolService.delete(id);
         LOG.info("Deleta oculos");
@@ -88,10 +92,10 @@ public class OculosDeSolResource {
     @GET
     @Path("/search/status/{status}")
     public Response findBystatus(@PathParam("status") Integer status) {
-            LOG.info("Busca varios oculos pelo status");
-            return Response.ok(oculosDeSolService.findByStatus(status)).build();
-        }
-        
+        LOG.info("Busca varios oculos pelo status");
+        return Response.ok(oculosDeSolService.findByStatus(status)).build();
+    }
+    
     @GET
     @Path("/search/quantidade/{quantidade}")
     public Response findByquantidade(@PathParam("quantidade") Integer quantidade) {
@@ -102,8 +106,8 @@ public class OculosDeSolResource {
     @GET
     @Path("/search/tamanho/{tamanho}")
     public Response findBytamanho(@PathParam("tamanho") String tamanho) {
-    LOG.info("Busca varios oculos pelo tamanho");
-    return Response.ok(oculosDeSolService.findByTamanho(tamanho)).build();
+        LOG.info("Busca varios oculos pelo tamanho");
+        return Response.ok(oculosDeSolService.findByTamanho(tamanho)).build();
     }
     
     @GET
@@ -126,28 +130,30 @@ public class OculosDeSolResource {
         LOG.info("Busca varios oculos pela marca");
         return Response.ok(oculosDeSolService.findByMarca(marca)).build();
     }
-
+    
     @PATCH
     @Path("/{id}/upload/imagem")
+    @RolesAllowed({"ADM"})
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadImage(@PathParam("id") Long id, @MultipartForm LenteImageForm form) {
         try {
             String nomeImagem = oculosDeSolFileService.save(form.getNomeImagem(), form.getImagem());
             
             oculosDeSolService.updateNomeImagem(id, nomeImagem);
-        
+            
         } catch (IOException e) {
             LOG.info(e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                       .entity("Erro ao fazer upload da imagem. Verifique o log.")
-                       .build();
+            .entity("Erro ao fazer upload da imagem. Verifique o log.")
+            .build();
         }
         LOG.info("upload de imagem lente");
         return Response.noContent().build();
     }
-
+    
     @GET
     @Path("/download/imagem/{nomeImagem}")
+    @RolesAllowed({"ADM"})
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response downloadImage(@PathParam("nomeImagem") String nomeImagem) {
         ResponseBuilder response = 

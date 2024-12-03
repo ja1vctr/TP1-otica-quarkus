@@ -64,6 +64,9 @@ enum Categoria {
 enum Status {
     DISPONIVEL, INDISPONIVEL
 }
+enum Perfil {
+    ADM, USER
+}
 
 class Cartao {
     - bandeira: String
@@ -100,4 +103,5 @@ ItemPedido  "*" --> "1"  Produto
 
 Usuario     "1" --> "*"  Endereco
 Usuario     "1" --> "*"  Cartao
+Usuario     "1" --> "*"  Perfil
 @enduml

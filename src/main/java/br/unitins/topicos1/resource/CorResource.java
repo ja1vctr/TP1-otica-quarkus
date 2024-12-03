@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import br.unitins.topicos1.Service.CorService;
 import br.unitins.topicos1.dto.CorDTO;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -26,6 +27,7 @@ public class CorResource {
     CorService corService;
 
     @POST
+    @RolesAllowed({"ADM"})
     public Response create(CorDTO dto) {
         LOG.info("Cadastra uma cor");
         return Response.status(Response.Status.CREATED).entity(corService.create(dto)).build();
@@ -33,6 +35,7 @@ public class CorResource {
     
     @PUT
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response alter(@PathParam("id") Long id, CorDTO dto) {
         corService.alter(id, dto);
         LOG.info("Altera uma cor");
@@ -41,6 +44,7 @@ public class CorResource {
     
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response delete(@PathParam("id") Long id) {
         corService.delete(id);
         LOG.info("Deleta uma cor pelo id");
@@ -49,6 +53,7 @@ public class CorResource {
     
     
     @GET
+    @RolesAllowed({"ADM"})
     public Response findAll() {
         LOG.info("Busca todas as cores");
         return Response.ok(corService.findAll()).build();
@@ -56,6 +61,7 @@ public class CorResource {
     
     @GET
     @Path("/{id}")
+    @RolesAllowed({"ADM"})
     public Response findById(@PathParam("id") Long id) {
         LOG.info("Busca uma cor pelo id");
         return Response.ok(corService.findById(id)).build();
@@ -63,6 +69,7 @@ public class CorResource {
     
     @GET
     @Path("/search/nome/{nome}")
+    @RolesAllowed({"ADM"})
     public Response findByNome(@PathParam("nome") String nome) {
         LOG.info("Busca uma cor pelo nome");
         return Response.ok(corService.FindByNome(nome)).build();
