@@ -36,7 +36,13 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
         
         lente.setPreco(dto.preco());
         lente.setNome(dto.nome());
-        lente.setStatus(Status.valueOf(dto.status()));
+        
+        if(dto.quantidade() == 0){
+            lente.setStatus(Status.INDISPONIVEL);
+        }else{
+            lente.setStatus(Status.valueOf(dto.status()));
+        }
+
         lente.setQuantidade(dto.quantidade());
         lente.setTamanho(dto.tamnho());
         lente.setTipo(dto.tipo());
@@ -64,7 +70,13 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
 
         lente.setPreco(dto.preco());
         lente.setNome(dto.nome());
-        lente.setStatus(Status.valueOf(dto.status()));
+        
+        if(dto.quantidade() == 0){
+            lente.setStatus(Status.INDISPONIVEL);
+        }else{
+            lente.setStatus(Status.valueOf(dto.status()));
+        }
+
         lente.setQuantidade(dto.quantidade());
         lente.setTamanho(dto.tamnho());
         lente.setTipo(dto.tipo());

@@ -50,7 +50,8 @@ public class UsuarioServiceImp implements UsuarioService {
         
         usuario.setNome(dto.nome());
         usuario.setUsername(dto.username());
-        usuario.setSenha(dto.senha());
+        String hash = hashService.getHashSenha(dto.senha());
+        usuario.setSenha(hash);
         usuario.setPerfil(Perfil.USER);
         usuarioRepository.persist(usuario);
 

@@ -61,6 +61,10 @@ enum Categoria {
     MASCULINO, FEMININO, UNISSEX, INFANTIL
 }
 
+enum StatusPedido {
+    PENDENTE, PAGO, CANCELADO
+}
+
 enum Status {
     DISPONIVEL, INDISPONIVEL
 }
@@ -98,10 +102,11 @@ OculosDeSol "*"  --> "1" Categoria
 Pedido      "*" --> "1"  Usuario
 Pedido      "*" --> "*"  ItemPedido
 Pedido      "*" --> "1"  FormaPagamento
+Pedido      "1" --> "*"  Endereco
+Pedido      "1" --> "*"  Cartao
+Pedido      "1" --> "*"  StatusPedido
 
 ItemPedido  "*" --> "1"  Produto
 
-Usuario     "1" --> "*"  Endereco
-Usuario     "1" --> "*"  Cartao
 Usuario     "1" --> "*"  Perfil
 @enduml

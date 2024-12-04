@@ -1,5 +1,6 @@
 package br.unitins.topicos1.model;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@DiscriminatorValue("ARMACAO")
 public class Armacao extends Produto {
     private String formato;
     private Categoria categoria;

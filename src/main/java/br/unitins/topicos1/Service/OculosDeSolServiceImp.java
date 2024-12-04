@@ -43,7 +43,13 @@ public class OculosDeSolServiceImp implements ProdutoService<OculosDeSolResponse
 
         oculosDeSol.setPreco(dto.preco());
         oculosDeSol.setNome(dto.nome());
-        oculosDeSol.setStatus(Status.valueOf(dto.status()));
+
+        if(dto.quantidade() == 0){
+            oculosDeSol.setStatus(Status.INDISPONIVEL);
+        }else{
+            oculosDeSol.setStatus(Status.valueOf(dto.status()));
+        }
+
         oculosDeSol.setQuantidade(dto.quantidade());
         oculosDeSol.setTamanho(dto.tamnho());
         oculosDeSol.setTipo(dto.tipo());
@@ -74,7 +80,13 @@ public class OculosDeSolServiceImp implements ProdutoService<OculosDeSolResponse
 
         oculosDeSol.setPreco(dto.preco());
         oculosDeSol.setNome(dto.nome());
-        oculosDeSol.setStatus(Status.valueOf(dto.status()));
+        
+        if(dto.quantidade() == 0){
+            oculosDeSol.setStatus(Status.INDISPONIVEL);
+        }else{
+            oculosDeSol.setStatus(Status.valueOf(dto.status()));
+        }
+
         oculosDeSol.setQuantidade(dto.quantidade());
         oculosDeSol.setTamanho(dto.tamnho());
         oculosDeSol.setTipo(dto.tipo());

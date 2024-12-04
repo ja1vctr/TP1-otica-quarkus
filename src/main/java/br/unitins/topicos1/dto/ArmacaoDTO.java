@@ -1,6 +1,6 @@
 package br.unitins.topicos1.dto;
 
-import io.smallrye.common.constraint.NotNull;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -10,7 +10,7 @@ public record ArmacaoDTO(
         Double  preco,
         @NotBlank(message = "Valor não pode ser nulo")
         String  nome,
-        @NotNull
+        @NotNull(message = "O status não pode ser nulo")
         Integer status,
         @PositiveOrZero
         Integer quantidade,
@@ -21,6 +21,6 @@ public record ArmacaoDTO(
         String  formato,
         Integer categoria,
         String  curvaDaLente,
+        @NotNull(message = "O id da cor não pode ser nulo")
         Long    cor
-) {
-}
+) {}

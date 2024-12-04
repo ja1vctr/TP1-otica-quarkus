@@ -42,7 +42,13 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
 
         armacao.setPreco(dto.preco());
         armacao.setNome(dto.nome());
+
+        if(dto.quantidade() == 0){
+            armacao.setStatus(Status.INDISPONIVEL);
+        }else{
         armacao.setStatus(Status.valueOf(dto.status()));
+        }
+
         armacao.setQuantidade(dto.quantidade());
         armacao.setTamanho(dto.tamnho());
         armacao.setTipo(dto.tipo());
@@ -73,7 +79,13 @@ public class ArmacaoServiceImp implements ProdutoService<ArmacaoResponseDTO, Arm
 
         armacao.setPreco(dto.preco());
         armacao.setNome(dto.nome());
+
+        if(dto.quantidade() == 0){
+            armacao.setStatus(Status.INDISPONIVEL);
+        }else{
         armacao.setStatus(Status.valueOf(dto.status()));
+        }
+
         armacao.setQuantidade(dto.quantidade());
         armacao.setTamanho(dto.tamnho());
         armacao.setTipo(dto.tipo());

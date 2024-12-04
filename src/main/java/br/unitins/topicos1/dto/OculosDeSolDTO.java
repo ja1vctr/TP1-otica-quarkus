@@ -1,6 +1,6 @@
 package br.unitins.topicos1.dto;
 
-import io.smallrye.common.constraint.NotNull;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -21,6 +21,7 @@ public record OculosDeSolDTO(
         String  modelo,
         Integer categoria,
         String  filtroSolar,
+        @NotNull(message = "O id da cor não pode ser nulo")
         Long    cor
 ) {
 }

@@ -1,13 +1,13 @@
 package br.unitins.topicos1.resource;
 
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.Service.hash.HashService;
 import br.unitins.topicos1.Service.jwt.JwtService;
 import br.unitins.topicos1.Service.user.UsuarioService;
 import br.unitins.topicos1.dto.user.AuthDTO;
 import br.unitins.topicos1.dto.user.UsuarioResponseDTO;
-import br.unitins.topicos1.model.user.Usuario;
-import org.jboss.logging.Logger;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -23,7 +23,7 @@ import jakarta.ws.rs.core.Response.Status;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthResource {
-    
+
     @Inject
     HashService hashService;
     
