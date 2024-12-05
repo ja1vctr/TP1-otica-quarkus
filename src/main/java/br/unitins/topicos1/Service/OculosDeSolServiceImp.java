@@ -2,7 +2,6 @@ package br.unitins.topicos1.Service;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.ArmacaoResponseDTO;
 import br.unitins.topicos1.dto.OculosDeSolDTO;
 import br.unitins.topicos1.dto.OculosDeSolResponseDTO;
 import br.unitins.topicos1.model.Categoria;

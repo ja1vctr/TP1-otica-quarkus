@@ -1,29 +1,26 @@
 package br.unitins.topicos1.model.pedido;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.unitins.topicos1.model.BaseEntity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
+import lombok.Setter;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+@Entity
 @Getter
-public enum Pagamento {
-    BOLETO(1,"Boleto"),
-    PIX(2,"Pix"),
-    DEBITO(3,"Debito"),
-    CREDITO(4,"Credito");
-
-    int id;
-    String nome;
-
-    Pagamento(int id, String nome){
-        this.id = id;
-        this.nome = nome;
-    }
-
-    public static Pagamento valueOf(Integer id) throws IllegalArgumentException{
-        for(Pagamento pagamento : Pagamento.values()){
-            if(id == pagamento.id)
-                return pagamento;
-        }
-        throw new IllegalArgumentException("id pagamento invalido");
-    }
+@Setter
+public class Pagamento extends BaseEntity {
+    private TipoPagamento tipoPagamento;
+    private Double valor;
+    private Boolean statusPagamento;
+    private LocalDateTime dataConfirmacaoPagamento;
+    @OneToOne
+    @JoinColumn(name = "id_pedido", unique = true, nullable = false)
+    @JsonIgnore
+    private Pedido pedido;
 }

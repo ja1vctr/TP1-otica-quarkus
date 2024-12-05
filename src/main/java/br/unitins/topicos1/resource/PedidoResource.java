@@ -3,14 +3,17 @@ package br.unitins.topicos1.resource;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
-
 import br.unitins.topicos1.Service.pedido.PedidoService;
 import br.unitins.topicos1.dto.pedido.PedidoDTO;
 import br.unitins.topicos1.dto.pedido.PedidoResponseDTO;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -39,5 +42,14 @@ public class PedidoResource {
         List<PedidoResponseDTO> pedidos = pedidoService.findByUserId(usuarioId);
         LOG.info("Busca todos os pedidos do usuario");
         return Response.ok(pedidos).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    @RolesAllowed({"USER", "ADM"})
+    public Response getPedido(@PathParam("id") Long id) {
+        PedidoResponseDTO pedidoResponse = pedidoService.findById(id);
+        LOG.info("Busca pedido por id");
+        return Response.ok(pedidoResponse).build();
     }
 }

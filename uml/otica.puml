@@ -53,9 +53,16 @@ class Endereco {
     - numero: Integer
 }
 
-enum FormaPagamento {
+class Pagamento {
+    - valor: Double
+    - data: LocalDateTime
+    - status: String
+}
+
+enum TipoPagamento {
     BOLETO, PIX, DEBITO, CREDITO
 }
+
 
 enum Categoria {
     MASCULINO, FEMININO, UNISSEX, INFANTIL
@@ -72,13 +79,6 @@ enum Perfil {
     ADM, USER
 }
 
-class Cartao {
-    - bandeira: String
-    - numero: String
-    - nomeTitular: String
-    - validade: String
-    - codigoSeguranca: String
-}
 
 class Cor {
     - nome: String
@@ -101,10 +101,11 @@ OculosDeSol "*"  --> "1" Categoria
 
 Pedido      "*" --> "1"  Usuario
 Pedido      "*" --> "*"  ItemPedido
-Pedido      "*" --> "1"  FormaPagamento
 Pedido      "1" --> "*"  Endereco
-Pedido      "1" --> "*"  Cartao
 Pedido      "1" --> "*"  StatusPedido
+Pedido      "1" -up-> "1"  Pagamento
+
+Pagamento   "*" -left-> "1"  TipoPagamento
 
 ItemPedido  "*" --> "1"  Produto
 
