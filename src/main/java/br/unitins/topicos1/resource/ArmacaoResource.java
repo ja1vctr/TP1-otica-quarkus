@@ -92,11 +92,12 @@ public class ArmacaoResource {
     @GET
     @Path("/search/status/{status}")
     public Response findBystatus(@PathParam("status") Integer status) {
-            LOG.info("Busca varias armacao pelo status");
-            return Response.ok(armacaoService.findByStatus(status)).build();
-        }
-        
+        LOG.info("Busca varias armacao pelo status");
+        return Response.ok(armacaoService.findByStatus(status)).build();
+    }
+    
     @GET
+    @RolesAllowed({"ADM"})
     @Path("/search/quantidade/{quantidade}")
     public Response findByquantidade(@PathParam("quantidade") Integer quantidade) {
     LOG.info("Busca varias armacao pela quantidade");
