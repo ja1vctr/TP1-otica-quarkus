@@ -96,7 +96,7 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
     }
     
     @Override
-    public List findAll() {
+    public List<LenteResponseDTO>findAll() {
         return lenteRepository.findAll()
                                 .stream()
                                 .map(LenteResponseDTO::valueOf)
@@ -110,7 +110,7 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
     }
     
     @Override
-    public List findByPreco(Double preco) {
+    public List<LenteResponseDTO>findByPreco(Double preco) {
         return lenteRepository.findByPreco(preco)
                                 .stream()
                                 .map(LenteResponseDTO::valueOf)
@@ -118,7 +118,7 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
     }
     
     @Override
-    public List findByNome(String nome) {
+    public List<LenteResponseDTO>findByNome(String nome) {
         return lenteRepository.findByListNome(nome)
                                 .stream()
                                 .map(LenteResponseDTO::valueOf)
@@ -126,7 +126,7 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
     }
     
     @Override
-    public List findByStatus(Integer idStatus) {
+    public List<LenteResponseDTO>findByStatus(Integer idStatus) {
         Status status = Status.valueOf(idStatus);
 
         return lenteRepository.findByListSatus(status)
@@ -136,7 +136,7 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
     }
     
     @Override
-    public List findByQuantidade(Integer quantidade) {
+    public List<LenteResponseDTO>findByQuantidade(Integer quantidade) {
         return lenteRepository.findByListQuantidade(quantidade)
                                 .stream()
                                 .map(LenteResponseDTO::valueOf)
@@ -144,7 +144,7 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
     }
     
     @Override
-    public List findByTamanho(String tamanho) {
+    public List<LenteResponseDTO>findByTamanho(String tamanho) {
         return lenteRepository.findByListTamanho(tamanho)
                                 .stream()
                                 .map(LenteResponseDTO::valueOf)
@@ -152,7 +152,7 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
     }
     
     @Override
-    public List findByTipo(String tipo) {
+    public List<LenteResponseDTO>findByTipo(String tipo) {
         return lenteRepository.findByListTipo(tipo)
                                 .stream()
                                 .map(LenteResponseDTO::valueOf)
@@ -160,7 +160,7 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
     }
     
     @Override
-    public List findByMaterial(String material) {
+    public List<LenteResponseDTO>findByMaterial(String material) {
         return lenteRepository.findByListMaterial(material)
                                 .stream()
                                 .map(LenteResponseDTO::valueOf)
@@ -168,7 +168,7 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
     }
     
     @Override
-    public List findByMarca(Long marca) {
+    public List<LenteResponseDTO>findByMarca(Long marca) {
         return lenteRepository.findByListMarca(marca)
                                 .stream()
                                 .map(LenteResponseDTO::valueOf)
@@ -208,4 +208,4 @@ public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDT
         }
     }
 
-} 
+}

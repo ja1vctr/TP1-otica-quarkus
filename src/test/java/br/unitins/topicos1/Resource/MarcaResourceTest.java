@@ -8,19 +8,17 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
+import br.unitins.topicos1.Service.MarcaService;
+import br.unitins.topicos1.Service.hash.HashService;
+import br.unitins.topicos1.Service.jwt.JwtService;
+import br.unitins.topicos1.Service.user.UsuarioService;
 import br.unitins.topicos1.dto.MarcaDTO;
 import br.unitins.topicos1.dto.MarcaResponseDTO;
+import br.unitins.topicos1.dto.user.AuthDTO;
+import br.unitins.topicos1.dto.user.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Marca;
 import br.unitins.topicos1.repository.MarcaRepository;
 import br.unitins.topicos1.resource.MarcaResource;
-import br.unitins.topicos1.Service.MarcaService;
-import br.unitins.topicos1.Service.MarcaServiceImp;
-import br.unitins.topicos1.Service.ProdutoService;
-import br.unitins.topicos1.Service.jwt.JwtService;
-import br.unitins.topicos1.Service.hash.HashService;
-import br.unitins.topicos1.Service.user.UsuarioService;
-import br.unitins.topicos1.dto.user.AuthDTO;
-import br.unitins.topicos1.dto.user.UsuarioResponseDTO;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
