@@ -8,7 +8,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class LenteRespository implements PanacheRepository<Lente>{
+public class LenteRepository implements PanacheRepository<Lente>{
     
     public List<Lente> findByPreco(Double preco) {
         return find("preco = ?1", preco).list();

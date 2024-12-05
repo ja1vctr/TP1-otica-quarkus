@@ -7,7 +7,7 @@ import br.unitins.topicos1.dto.LenteResponseDTO;
 import br.unitins.topicos1.model.Lente;
 import br.unitins.topicos1.model.Marca;
 import br.unitins.topicos1.model.Status;
-import br.unitins.topicos1.repository.LenteRespository;
+import br.unitins.topicos1.repository.LenteRepository;
 import br.unitins.topicos1.repository.MarcaRepository;
 import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 public class LenteServiceImp implements ProdutoService<LenteResponseDTO, LenteDTO> {
     
     @Inject
-    LenteRespository lenteRepository;
+    LenteRepository lenteRepository;
     
     @Inject
     MarcaRepository  marcaRepository;

@@ -24,7 +24,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
 
-@Path("/Oculos")
+@Path("/oculos")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class OculosDeSolResource {
